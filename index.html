@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blox Sales | Loja de Contas</title>
+    <!-- Tailwind CSS para estilização rápida -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0b0c10;
+            color: #c5c6c7;
+            overflow-x: hidden;
+        }
+        .neon-text {
+            text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
+        }
+        .neon-border:hover {
+            box-shadow: 0 0 15px #39ff14;
+            border-color: #39ff14;
+        }
+        /* Animações de Transição */
+        .page {
+            transition: all 0.5s ease-in-out;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
+        .hidden-page {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+        .active-page {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= PÁGINA 1: INICIAL / ENTRAR ================= -->
+    <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center justify-center bg-radial from-[#1f2833] to-[#0b0c10] px-4 text-center">
+        <div class="animate-bounce mb-6 text-6xl text-[#39ff14]">
+            <i class="fa-solid fa-ship"></i>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4 tracking-wider">
+            BLOX <span class="text-[#39ff14] neon-text">SALES</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-md mb-8">
+            As melhores e mais seguras contas de Blox Fruits do mercado. Godhuman, Soul Guitar, Frutas Míticas e mais!
+        </p>
+        <button onclick="changePage('page-store')" class="bg-[#39ff14] text-black font-bold text-xl px-8 py-4 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
+            ENTRAR NA LOJA <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <!-- ================= PÁGINA 2: LOJA / VENDAS ================= -->
+    <div id="page-store" class="page hidden-page min-h-screen flex flex-col">
+        
+        <!-- NAV BAR -->
+        <nav class="bg-[#1f2833] border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="changePage('page-landing')">
+                <span class="text-2xl font-extrabold text-white">BLOX <span class="text-[#39ff14]">SALES</span></span>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <!-- Botão Suporte Discord -->
+                <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-4 py-2 rounded-md font-medium flex items-center gap-2 transition-colors">
+                    <i class="fa-brands fa-discord"></i> Suporte
+                </a>
+                <!-- Ícone do Carrinho -->
+                <button onclick="toggleCart()" class="relative p-2 text-white hover:text-[#39ff14] transition-colors cursor-pointer">
+                    <i class="fa-solid fa-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-2 bg-[#39ff14] text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- CONTEÚDO PRINCIPAL (PRODUTOS) -->
+        <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+            
+            <!-- CARD PRODUTO 1 -->
+            <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-4xl text-yellow-500">
+                        <i class="fa-solid fa-dragon"></i> <!-- Substituir por Tag de imagem se quiser: <img src="link" /> -->
+                    </div>
+                    <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-widest">Mais Vendida</span>
+                    <h3 class="text-xl font-bold text-white mt-2">Conta Godhuman + Kitsune</h3>
+                    <p class="text-sm text-gray-400 mt-2">Level Max (2550), Godhuman liberado, Fruta Kitsune Ingerida e vários itens lendários no inventário.</p>
+                </div>
+                <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between">
+                    <span class="text-2xl font-bold text-[#39ff14]">R$ 49,90</span>
+                    <button onclick="addToCart('Conta Godhuman + Kitsune', 49.90)" class="bg-[#39ff14] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-cart-plus"></i> Comprar
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARD PRODUTO 2 -->
+            <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-4xl text-purple-500">
+                        <i class="fa-solid fa-ghost"></i>
+                    </div>
+                    <span class="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-widest">Recomendado</span>
+                    <h3 class="text-xl font-bold text-white mt-2">Conta Soul Guitar + Dough V2</h3>
+                    <p class="text-sm text-gray-400 mt-2">Level Max, Soul Guitar e Cursed Dual Katana obtidas. Massa (Dough) totalmente despertada.</p>
+                </div>
+                <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between">
+                    <span class="text-2xl font-bold text-[#39ff14]">R$ 39,90</span>
+                    <button onclick="addToCart('Conta Soul Guitar + Dough V2', 39.90)" class="bg-[#39ff14] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-cart-plus"></i> Comprar
+                    </button>
+                </div>
+            </div>
+
+            <!-- CARD PRODUTO 3 -->
+            <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
+                <div class="p-6">
+                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-4xl text-blue-500">
+                        <i class="fa-solid fa-snowflake"></i>
+                    </div>
+                    <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-widest">Econômica</span>
+                    <h3 class="text-xl font-bold text-white mt-2">Conta Inicial Level Max</h3>
+                    <p class="text-sm text-gray-400 mt-2">Level 2550 limpo, ideal para você começar o seu pvp ou farmar seus próprios itens com maestria máxima.</p>
+                </div>
+                <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between">
+                    <span class="text-2xl font-bold text-[#39ff14]">R$ 19,90</span>
+                    <button onclick="addToCart('Conta Inicial Level Max', 19.90)" class="bg-[#39ff14] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                        <i class="fa-solid fa-cart-plus"></i> Comprar
+                    </button>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-950 p-6 text-center text-sm text-gray-600 border-t border-gray-900">
+            &copy; 2026 Blox Sales. Todos os direitos reservados. Inspirado no estilo The Blox.
+        </footer>
+    </div>
+
+    <!-- ================= MODAL DO CARRINHO (SIDEBAR) ================= -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-[#1f2833] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-gray-800 flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-shopping-cart text-[#39ff14]"></i> Seu Carrinho</h2>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl cursor-pointer">&times;</button>
+        </div>
+        
+        <!-- Itens do Carrinho -->
+        <div id="cart-items" class="flex-1 p-6 overflow-y-auto space-y-4">
+            <!-- Inserido dinamicamente via JS -->
+            <p class="text-gray-500 text-center py-8">Seu carrinho está vazio.</p>
+        </div>
+
+        <!-- Checkout -->
+        <div class="p-6 border-t border-gray-800 bg-gray-900/50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-400">Total:</span>
+                <span id="cart-total" class="text-2xl font-bold text-[#39ff14]">R$ 0,00</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-[#39ff14] text-black font-bold py-3 rounded-md hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer">
+                FINALIZAR COMPRA
+            </button>
+        </div>
+    </div>
+
+    <!-- Background overlay para fechar o carrinho ao clicar fora -->
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // --- Sistema de Troca de Páginas ---
+        function changePage(pageId) {
+            document.getElementById('page-landing').classList.remove('active-page');
+            document.getElementById('page-landing').classList.add('hidden-page');
+            document.getElementById('page-store').classList.remove('active-page');
+            document.getElementById('page-store').classList.add('hidden-page');
+            
+            const targetPage = document.getElementById(pageId);
+            targetPage.classList.remove('hidden-page');
+            targetPage.classList.add('active-page');
+            window.scrollTo(0, 0);
+        }
+
+        // --- Sistema do Carrinho ---
+        let cart = [];
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            sidebar.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function addToCart(name, price) {
+            // Verifica se o item já está no carrinho
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCartUI();
+            
+            // Abre o carrinho automaticamente para feedback visual rápido
+            toggleCart();
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            
+            // Atualizar contagem de itens
+            const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+            cartCount.innerText = totalItems;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center py-8">Seu carrinho está vazio.</p>';
+                cartTotal.innerText = 'R$ 0,00';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                cartItemsContainer.innerHTML += `
+                    <div class="flex justify-between items-center bg-gray-900 p-3 rounded-lg border border-gray-800">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">${item.name}</h4>
+                            <p class="text-xs text-[#39ff14]">R$ ${item.price.toFixed(2)} <span class="text-gray-500">x${item.quantity}</span></p>
+                        </div>
+                        <button onclick="removeFromCart('${item.name}')" class="text-red-500 hover:text-red-400 p-1 cursor-pointer">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            cartTotal.innerText = `R$ ${total.toFixed(2)}`;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+            
+            // Simulação de Checkout direcionando para o suporte ou gerando recibo
+            let mensagem = "Olá! Gostaria de comprar os seguintes itens:\n\n";
+            cart.forEach(item => {
+                mensagem += `- ${item.name} (x${item.quantity})\n`;
+            });
+            mensagem += `\nTotal: ${document.getElementById('cart-total').innerText}`;
+            
+            alert('Pedido gerado com sucesso! Você será redirecionado para o nosso Discord de Suporte para finalizar o pagamento e receber sua conta.');
+            
+            // Copia o pedido e manda o usuário para o Discord
+            navigator.clipboard.writeText(mensagem);
+            window.open("https://discord.gg/De9Y3EVqR", "_blank");
+        }
+    </script>
+</body>
+</html>
