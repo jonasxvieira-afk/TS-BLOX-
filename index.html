@@ -86,7 +86,7 @@
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
                     <div class="bg-gray-900/50 h-48 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                        <img src="https://static.wikia.nocookie.net/roblox-blox-piece/images/6/65/Kitsune_Fruit.png" class="h-40 w-auto object-contain transition-transform duration-300 hover:scale-110" alt="Fruta Kitsune">
+                        <img src="https://i.ibb.co/6wYgM0YF/Kitsune-Fruit.png" class="h-40 w-auto object-contain transition-transform duration-300 hover:scale-110" alt="Fruta Kitsune">
                     </div>
                     <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase">Deus Humano</span>
                     <h3 class="text-xl font-bold text-white mt-2">Conta Godhuman + Kitsune</h3>
@@ -102,8 +102,8 @@
 
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-5xl text-purple-500">
-                        <i class="fa-solid fa-guitar"></i>
+                    <div class="bg-gray-900/50 h-48 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://i.ibb.co/C5fP0vFp/soul-guitar.png" class="h-40 w-auto object-contain transition-transform duration-300 hover:scale-110" alt="Soul Guitar">
                     </div>
                     <span class="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded font-bold uppercase">Mítica</span>
                     <h3 class="text-xl font-bold text-white mt-2">Conta Soul Guitar + Dough V2</h3>
@@ -119,8 +119,8 @@
 
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-5xl text-blue-400">
-                        <i class="fa-solid fa-star"></i>
+                    <div class="bg-gray-900/50 h-48 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://i.ibb.co/v4g0997Y/level-max.png" class="h-40 w-auto object-contain transition-transform duration-300 hover:scale-110" alt="Conta Level Max">
                     </div>
                     <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded font-bold uppercase">Iniciante</span>
                     <h3 class="text-xl font-bold text-white mt-2">Conta Inicial Level Max</h3>
@@ -301,7 +301,6 @@
             cartTotal.innerText = `R$ ${total.toFixed(2)}`;
         }
 
-        // --- Nova Função de Checkout (Sem simulação de Pix) ---
         function processCheckout() {
             if (cart.length === 0) {
                 alert('Adicione itens no carrinho primeiro!');
@@ -310,17 +309,13 @@
 
             const emailInput = document.getElementById('checkout-email').value;
             
-            // Verificação básica se o cliente digitou um e-mail com "@"
             if (!emailInput || !emailInput.includes('@')) {
                 alert('Por favor, digite um E-mail válido para receber a sua conta.');
                 document.getElementById('checkout-email').focus();
                 return;
             }
 
-            // Exibe mensagem de confirmação para o cliente
             alert(`Tudo certo! Redirecionando para o pagamento seguro...\nSua conta será entregue no e-mail: ${emailInput}`);
-            
-            // Redireciona para o suporte do Discord temporariamente
             window.open('https://discord.gg/De9Y3EVqR', '_blank');
         }
     </script>
