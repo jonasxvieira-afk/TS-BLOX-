@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blox Sales | Loja de Contas</title>
-    <!-- Tailwind CSS para estilização rápida -->
+    <title>TS BLOX | Loja de Contas Instantânea</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Font Awesome para Ícones -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -19,13 +19,12 @@
             overflow-x: hidden;
         }
         .neon-text {
-            text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
+            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
         }
         .neon-border:hover {
-            box-shadow: 0 0 15px #39ff14;
-            border-color: #39ff14;
+            box-shadow: 0 0 15px #00f0ff;
+            border-color: #00f0ff;
         }
-        /* Animações de Transição */
         .page {
             transition: all 0.5s ease-in-out;
             position: absolute;
@@ -48,96 +47,99 @@
 </head>
 <body>
 
-    <!-- ================= PÁGINA 1: INICIAL / ENTRAR ================= -->
-    <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center justify-center bg-radial from-[#1f2833] to-[#0b0c10] px-4 text-center">
-        <div class="animate-bounce mb-6 text-6xl text-[#39ff14]">
-            <i class="fa-solid fa-ship"></i>
+    <!-- ================= PÁGINA 1: INICIAL ================= -->
+    <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center justify-center bg-radial from-[#121c24] to-[#0b0c10] px-4 text-center">
+        <div class="animate-pulse mb-6 text-7xl text-[#00f0ff]">
+            <i class="fa-solid fa-bolt"></i>
         </div>
         <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4 tracking-wider">
-            BLOX <span class="text-[#39ff14] neon-text">SALES</span>
+            TS <span class="text-[#00f0ff] neon-text">BLOX</span>
         </h1>
         <p class="text-gray-400 text-lg md:text-xl max-w-md mb-8">
-            As melhores e mais seguras contas de Blox Fruits do mercado. Godhuman, Soul Guitar, Frutas Míticas e mais!
+            Pagamento via Pix com <span class="text-white font-bold">Entrega Instantânea</span>. Pagou, recebeu a conta na hora!
         </p>
-        <button onclick="changePage('page-store')" class="bg-[#39ff14] text-black font-bold text-xl px-8 py-4 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
-            ENTRAR NA LOJA <i class="fa-solid fa-arrow-right"></i>
+        <button onclick="changePage('page-store')" class="bg-[#00f0ff] text-black font-bold text-xl px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-[0_0_20px_#00f0ff] active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
+            ENTRAR NA LOJA <i class="fa-solid fa-铺"></i>
         </button>
     </div>
 
-    <!-- ================= PÁGINA 2: LOJA / VENDAS ================= -->
+    <!-- ================= PÁGINA 2: VENDAS ================= -->
     <div id="page-store" class="page hidden-page min-h-screen flex flex-col">
         
         <!-- NAV BAR -->
         <nav class="bg-[#1f2833] border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
             <div class="flex items-center gap-2 cursor-pointer" onclick="changePage('page-landing')">
-                <span class="text-2xl font-extrabold text-white">BLOX <span class="text-[#39ff14]">SALES</span></span>
+                <span class="text-2xl font-extrabold text-white">TS <span class="text-[#00f0ff]">BLOX</span></span>
             </div>
             
-            <div class="flex items-center gap-6">
-                <!-- Botão Suporte Discord -->
-                <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-4 py-2 rounded-md font-medium flex items-center gap-2 transition-colors">
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 transition-colors">
                     <i class="fa-brands fa-discord"></i> Suporte
                 </a>
-                <!-- Ícone do Carrinho -->
-                <button onclick="toggleCart()" class="relative p-2 text-white hover:text-[#39ff14] transition-colors cursor-pointer">
+                <button onclick="toggleCart()" class="relative p-2 text-white hover:text-[#00f0ff] transition-colors cursor-pointer">
                     <i class="fa-solid fa-shopping-cart text-2xl"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-2 bg-[#39ff14] text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    <span id="cart-count" class="absolute -top-1 -right-2 bg-[#00f0ff] text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
                 </button>
             </div>
         </nav>
 
-        <!-- CONTEÚDO PRINCIPAL (PRODUTOS) -->
-        <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
+        <!-- ALERTA DE ENTREGA -->
+        <div class="bg-blue-950/40 border-b border-blue-800 text-blue-400 text-center py-2 text-sm flex items-center justify-center gap-2">
+            <i class="fa-solid fa-circle-info"></i> Sistema de entrega automática ativo. Verifique seus dados na tela pós-pagamento.
+        </div>
+
+        <!-- PRODUTOS -->
+        <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-4">
             
-            <!-- CARD PRODUTO 1 -->
+            <!-- PRODUTO 1 -->
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-4xl text-yellow-500">
-                        <i class="fa-solid fa-dragon"></i> <!-- Substituir por Tag de imagem se quiser: <img src="link" /> -->
+                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-5xl text-yellow-500">
+                        <i class="fa-solid fa-crown"></i>
                     </div>
-                    <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-widest">Mais Vendida</span>
+                    <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase">Deus Humano</span>
                     <h3 class="text-xl font-bold text-white mt-2">Conta Godhuman + Kitsune</h3>
-                    <p class="text-sm text-gray-400 mt-2">Level Max (2550), Godhuman liberado, Fruta Kitsune Ingerida e vários itens lendários no inventário.</p>
+                    <p class="text-sm text-gray-400 mt-2">Level Maximo Garantido, Fruta Kitsune ativa e mestre de espadas completo.</p>
                 </div>
                 <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between">
-                    <span class="text-2xl font-bold text-[#39ff14]">R$ 49,90</span>
-                    <button onclick="addToCart('Conta Godhuman + Kitsune', 49.90)" class="bg-[#39ff14] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                    <span class="text-2xl font-bold text-[#00f0ff]">R$ 49,90</span>
+                    <button onclick="addToCart('Conta Godhuman + Kitsune', 49.90, 'p1')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
                         <i class="fa-solid fa-cart-plus"></i> Comprar
                     </button>
                 </div>
             </div>
 
-            <!-- CARD PRODUTO 2 -->
+            <!-- PRODUTO 2 -->
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-4xl text-purple-500">
-                        <i class="fa-solid fa-ghost"></i>
+                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-5xl text-purple-500">
+                        <i class="fa-solid fa-guitar"></i>
                     </div>
-                    <span class="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-widest">Recomendado</span>
+                    <span class="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded font-bold uppercase">Mítica</span>
                     <h3 class="text-xl font-bold text-white mt-2">Conta Soul Guitar + Dough V2</h3>
-                    <p class="text-sm text-gray-400 mt-2">Level Max, Soul Guitar e Cursed Dual Katana obtidas. Massa (Dough) totalmente despertada.</p>
+                    <p class="text-sm text-gray-400 mt-2">Soul Guitar lendária equipada e fruta Massa despertada no máximo.</p>
                 </div>
                 <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between">
-                    <span class="text-2xl font-bold text-[#39ff14]">R$ 39,90</span>
-                    <button onclick="addToCart('Conta Soul Guitar + Dough V2', 39.90)" class="bg-[#39ff14] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                    <span class="text-2xl font-bold text-[#00f0ff]">R$ 39,90</span>
+                    <button onclick="addToCart('Conta Soul Guitar + Dough V2', 39.90, 'p2')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
                         <i class="fa-solid fa-cart-plus"></i> Comprar
                     </button>
                 </div>
             </div>
 
-            <!-- CARD PRODUTO 3 -->
+            <!-- PRODUTO 3 -->
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-4xl text-blue-500">
-                        <i class="fa-solid fa-snowflake"></i>
+                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-5xl text-blue-400">
+                        <i class="fa-solid fa-star"></i>
                     </div>
-                    <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-widest">Econômica</span>
+                    <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded font-bold uppercase">Iniciante</span>
                     <h3 class="text-xl font-bold text-white mt-2">Conta Inicial Level Max</h3>
-                    <p class="text-sm text-gray-400 mt-2">Level 2550 limpo, ideal para você começar o seu pvp ou farmar seus próprios itens com maestria máxima.</p>
+                    <p class="text-sm text-gray-400 mt-2">Conta limpa lvl 2550 pronta para você customizar e iniciar jornada.</p>
                 </div>
                 <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between">
-                    <span class="text-2xl font-bold text-[#39ff14]">R$ 19,90</span>
-                    <button onclick="addToCart('Conta Inicial Level Max', 19.90)" class="bg-[#39ff14] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                    <span class="text-2xl font-bold text-[#00f0ff]">R$ 19,90</span>
+                    <button onclick="addToCart('Conta Inicial Level Max', 19.90, 'p3')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
                         <i class="fa-solid fa-cart-plus"></i> Comprar
                     </button>
                 </div>
@@ -145,44 +147,101 @@
 
         </main>
 
-        <!-- FOOTER -->
-        <footer class="bg-gray-950 p-6 text-center text-sm text-gray-600 border-t border-gray-900">
-            &copy; 2026 Blox Sales. Todos os direitos reservados. Inspirado no estilo The Blox.
+        <!-- PAINEL DE ESTOQUE (RESTRITO / CONFIGURAÇÃO SEU USO) -->
+        <section class="max-w-7xl w-full mx-auto p-6 my-4 bg-gray-950 rounded-xl border border-gray-900">
+            <h4 class="text-sm font-bold text-gray-500 mb-3"><i class="fa-solid fa-gear"></i> CONFIGURAÇÃO DE ESTOQUE DA TS BLOX (Apenas você vê/edita)</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="bg-gray-900 p-3 rounded">
+                    <p class="text-white mb-1 font-semibold">Conta Kitsune:</p>
+                    <input id="stock-p1" type="text" value="User: ts_kitsune1 | Pass: blox9982" class="w-full bg-gray-800 border border-gray-700 p-2 rounded text-gray-300">
+                </div>
+                <div class="bg-gray-900 p-3 rounded">
+                    <p class="text-white mb-1 font-semibold">Conta Dough V2:</p>
+                    <input id="stock-p2" type="text" value="User: ts_doughv2 | Pass: master442" class="w-full bg-gray-800 border border-gray-700 p-2 rounded text-gray-300">
+                </div>
+                <div class="bg-gray-900 p-3 rounded">
+                    <p class="text-white mb-1 font-semibold">Conta Lvl Max:</p>
+                    <input id="stock-p3" type="text" value="User: ts_maxlvl3 | Pass: security881" class="w-full bg-gray-800 border border-gray-700 p-2 rounded text-gray-300">
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-gray-950 p-6 text-center text-sm text-gray-600 border-t border-gray-900 mt-auto">
+            &copy; 2026 TS BLOX. Todos os direitos reservados. Entrega automática via PIX.
         </footer>
     </div>
 
-    <!-- ================= MODAL DO CARRINHO (SIDEBAR) ================= -->
+    <!-- ================= MODAL DO CARRINHO ================= -->
     <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-[#1f2833] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-gray-800 flex flex-col">
         <div class="p-6 border-b border-gray-800 flex justify-between items-center">
-            <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-shopping-cart text-[#39ff14]"></i> Seu Carrinho</h2>
+            <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-shopping-cart text-[#00f0ff]"></i> Seu Carrinho</h2>
             <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl cursor-pointer">&times;</button>
         </div>
-        
-        <!-- Itens do Carrinho -->
         <div id="cart-items" class="flex-1 p-6 overflow-y-auto space-y-4">
-            <!-- Inserido dinamicamente via JS -->
             <p class="text-gray-500 text-center py-8">Seu carrinho está vazio.</p>
         </div>
-
-        <!-- Checkout -->
         <div class="p-6 border-t border-gray-800 bg-gray-900/50">
             <div class="flex justify-between items-center mb-4">
                 <span class="text-gray-400">Total:</span>
-                <span id="cart-total" class="text-2xl font-bold text-[#39ff14]">R$ 0,00</span>
+                <span id="cart-total" class="text-2xl font-bold text-[#00f0ff]">R$ 0,00</span>
             </div>
-            <button onclick="checkout()" class="w-full bg-[#39ff14] text-black font-bold py-3 rounded-md hover:scale-[1.02] active:scale-[0.98] transition-transform cursor-pointer">
-                FINALIZAR COMPRA
+            <button onclick="openPixModal()" class="w-full bg-[#00f0ff] text-black font-bold py-3 rounded-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-brands fa-pix"></i> PAGAR COM PIX
             </button>
         </div>
     </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
 
-    <!-- Background overlay para fechar o carrinho ao clicar fora -->
-    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+    <!-- ================= MODAL DE PAGAMENTO PIX E ENTREGA ================= -->
+    <div id="pix-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-[#1f2833] w-full max-w-md rounded-xl border border-gray-700 p-6 flex flex-col items-center text-center relative animate-fade-in">
+            
+            <button onclick="closePixModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl cursor-pointer">&times;</button>
 
+            <!-- Etapa 1: Pagar -->
+            <div id="pix-step-pay" class="w-full">
+                <span class="bg-teal-500/20 text-teal-400 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-widest"><i class="fa-brands fa-pix"></i> Pix Copia e Cola</span>
+                <h3 class="text-xl font-bold text-white mt-3">Aguardando Pagamento</h3>
+                <p class="text-xs text-gray-400 mt-1 mb-4">Escaneie o QR Code ou use o Copia e Cola abaixo</p>
+                
+                <!-- Qr Code Simulado -->
+                <div class="bg-white p-3 rounded-lg inline-block mb-4">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=TSBLOX-Simulacao-Pix-Aprovado" alt="QR Code Pix">
+                </div>
 
-    <!-- ================= JAVASCRIPT LOGIC ================= -->
+                <div class="w-full bg-gray-900 p-2.5 rounded border border-gray-800 text-xs text-gray-300 flex justify-between items-center mb-4">
+                    <span class="truncate font-mono mr-2">tsblox0394820394820349820394820394820394pix</span>
+                    <button onclick="alert('Código Copiado!')" class="bg-gray-800 px-3 py-1 rounded text-[#00f0ff] hover:bg-gray-750">Copiar</button>
+                </div>
+
+                <button onclick="simulatePaymentApproval()" class="w-full bg-green-500 text-black font-bold py-2.5 rounded hover:bg-green-400 transition-colors cursor-pointer flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-circle-check"></i> CONFIRMAR PAGAMENTO (Simular)
+                </button>
+            </div>
+
+            <!-- Etapa 2: Entrega Pronta -->
+            <div id="pix-step-delivery" class="w-full hidden">
+                <div class="text-5xl text-green-400 mb-2 animate-bounce">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white">Pagamento Aprovado!</h3>
+                <p class="text-sm text-gray-400 mt-1 mb-4">Aqui está o acesso instantâneo da sua conta:</p>
+
+                <!-- Box de Entrega de Dados -->
+                <div id="credentials-box" class="space-y-3">
+                    <!-- Gerado dinamicamente com base no estoque cadastrado acima -->
+                </div>
+
+                <div class="mt-6 bg-amber-500/10 border border-amber-800/60 p-3 rounded text-left text-xs text-amber-400">
+                    <i class="fa-solid fa-triangle-exclamation"></i> **Importante:** Tire um print ou copie esses dados agora. Eles somem ao fechar a janela. Caso precise de ajuda, entre no nosso <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="underline font-bold">Discord</a>.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= LOGIC JAVASCRIPT ================= -->
     <script>
-        // --- Sistema de Troca de Páginas ---
         function changePage(pageId) {
             document.getElementById('page-landing').classList.remove('active-page');
             document.getElementById('page-landing').classList.add('hidden-page');
@@ -195,7 +254,6 @@
             window.scrollTo(0, 0);
         }
 
-        // --- Sistema do Carrinho ---
         let cart = [];
 
         function toggleCart() {
@@ -205,22 +263,19 @@
             overlay.classList.toggle('hidden');
         }
 
-        function addToCart(name, price) {
-            // Verifica se o item já está no carrinho
-            const existingItem = cart.find(item => item.name === name);
+        function addToCart(name, price, productId) {
+            const existingItem = cart.find(item => item.id === productId);
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
-                cart.push({ name, price, quantity: 1 });
+                cart.push({ id: productId, name, price, quantity: 1 });
             }
             updateCartUI();
-            
-            // Abre o carrinho automaticamente para feedback visual rápido
             toggleCart();
         }
 
-        function removeFromCart(name) {
-            cart = cart.filter(item => item.name !== name);
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
             updateCartUI();
         }
 
@@ -229,7 +284,6 @@
             const cartCount = document.getElementById('cart-count');
             const cartTotal = document.getElementById('cart-total');
             
-            // Atualizar contagem de itens
             const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
             cartCount.innerText = totalItems;
 
@@ -248,9 +302,9 @@
                     <div class="flex justify-between items-center bg-gray-900 p-3 rounded-lg border border-gray-800">
                         <div>
                             <h4 class="text-sm font-bold text-white">${item.name}</h4>
-                            <p class="text-xs text-[#39ff14]">R$ ${item.price.toFixed(2)} <span class="text-gray-500">x${item.quantity}</span></p>
+                            <p class="text-xs text-[#00f0ff]">R$ ${item.price.toFixed(2)} x${item.quantity}</p>
                         </div>
-                        <button onclick="removeFromCart('${item.name}')" class="text-red-500 hover:text-red-400 p-1 cursor-pointer">
+                        <button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-400 p-1 cursor-pointer">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </div>
@@ -260,24 +314,52 @@
             cartTotal.innerText = `R$ ${total.toFixed(2)}`;
         }
 
-        function checkout() {
+        // --- Fluxo do Pix e Entrega Automática ---
+        function openPixModal() {
             if (cart.length === 0) {
-                alert('Seu carrinho está vazio!');
+                alert('Adicione itens no carrinho primeiro!');
                 return;
             }
+            // Resetar etapas do modal
+            document.getElementById('pix-step-pay').classList.remove('hidden');
+            document.getElementById('pix-step-delivery').classList.add('hidden');
             
-            // Simulação de Checkout direcionando para o suporte ou gerando recibo
-            let mensagem = "Olá! Gostaria de comprar os seguintes itens:\n\n";
+            // Abrir modal
+            document.getElementById('pix-modal').classList.remove('hidden');
+        }
+
+        function closePixModal() {
+            document.getElementById('pix-modal').classList.add('hidden');
+        }
+
+        function simulatePaymentApproval() {
+            const deliveryBox = document.getElementById('credentials-box');
+            deliveryBox.innerHTML = ''; // Limpa envios anteriores
+
+            // Busca os dados do estoque configurado para cada item no carrinho
             cart.forEach(item => {
-                mensagem += `- ${item.name} (x${item.quantity})\n`;
+                const stockInput = document.getElementById(`stock-${item.id}`);
+                const credentials = stockInput ? stockInput.value : "Estoque esgotado! Contate o suporte no Discord.";
+                
+                for(let i = 0; i < item.quantity; i++) {
+                    deliveryBox.innerHTML += `
+                        <div class="bg-gray-900 p-3 rounded-lg border border-green-500/30 text-left">
+                            <p class="text-xs text-green-400 font-bold mb-1"><i class="fa-solid fa-gift"></i> ${item.name} (#${i+1}):</p>
+                            <div class="bg-black p-2 rounded text-xs font-mono text-white flex justify-between">
+                                <span>${credentials}</span>
+                            </div>
+                        </div>
+                    `;
+                }
             });
-            mensagem += `\nTotal: ${document.getElementById('cart-total').innerText}`;
-            
-            alert('Pedido gerado com sucesso! Você será redirecionado para o nosso Discord de Suporte para finalizar o pagamento e receber sua conta.');
-            
-            // Copia o pedido e manda o usuário para o Discord
-            navigator.clipboard.writeText(mensagem);
-            window.open("https://discord.gg/De9Y3EVqR", "_blank");
+
+            // Transição de tela de carregamento para entrega
+            document.getElementById('pix-step-pay').classList.add('hidden');
+            document.getElementById('pix-step-delivery').classList.remove('hidden');
+
+            // Limpa o carrinho após a compra feita
+            cart = [];
+            updateCartUI();
         }
     </script>
 </body>
