@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TS BLOX | Loja de Contas Instantânea</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -47,7 +44,6 @@
 </head>
 <body>
 
-    <!-- ================= PÁGINA 1: INICIAL ================= -->
     <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center justify-center bg-radial from-[#121c24] to-[#0b0c10] px-4 text-center">
         <div class="animate-pulse mb-6 text-7xl text-[#00f0ff]">
             <i class="fa-solid fa-bolt"></i>
@@ -63,10 +59,8 @@
         </button>
     </div>
 
-    <!-- ================= PÁGINA 2: VENDAS ================= -->
     <div id="page-store" class="page hidden-page min-h-screen flex flex-col">
         
-        <!-- NAV BAR -->
         <nav class="bg-[#1f2833]/90 backdrop-blur-md border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
             <div class="flex items-center gap-2 cursor-pointer" onclick="changePage('page-landing')">
                 <span class="text-2xl font-extrabold text-white">TS <span class="text-[#00f0ff]">BLOX</span></span>
@@ -83,19 +77,16 @@
             </div>
         </nav>
 
-        <!-- ALERTA DE ENTREGA -->
         <div class="bg-blue-950/40 border-b border-blue-800 text-blue-400 text-center py-2 text-sm flex items-center justify-center gap-2">
             <i class="fa-solid fa-shield-halved"></i> Compra 100% Segura. A conta será enviada para o seu e-mail após o pagamento.
         </div>
 
-        <!-- PRODUTOS -->
         <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-4">
             
-            <!-- PRODUTO 1 -->
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
-                    <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-5xl text-yellow-500">
-                        <i class="fa-solid fa-crown"></i>
+                    <div class="bg-gray-900/50 h-48 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://static.wikia.nocookie.net/roblox-blox-piece/images/6/65/Kitsune_Fruit.png" class="h-40 w-auto object-contain transition-transform duration-300 hover:scale-110" alt="Fruta Kitsune">
                     </div>
                     <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase">Deus Humano</span>
                     <h3 class="text-xl font-bold text-white mt-2">Conta Godhuman + Kitsune</h3>
@@ -109,7 +100,6 @@
                 </div>
             </div>
 
-            <!-- PRODUTO 2 -->
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
                     <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-5xl text-purple-500">
@@ -127,7 +117,6 @@
                 </div>
             </div>
 
-            <!-- PRODUTO 3 -->
             <div class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between">
                 <div class="p-6">
                     <div class="bg-gray-900 h-48 rounded-lg mb-4 flex items-center justify-center text-5xl text-blue-400">
@@ -146,14 +135,12 @@
             </div>
         </main>
 
-        <!-- ================= SEÇÃO DE AVALIAÇÕES ================= -->
         <section class="max-w-7xl w-full mx-auto p-6 mt-4">
             <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-2">
                 <i class="fa-solid fa-star text-yellow-500"></i> Avaliações de Clientes
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
-                <!-- Avaliação 1 -->
                 <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
                     <div class="flex text-yellow-500 text-sm mb-3">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
@@ -162,7 +149,6 @@
                     <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@Pedrinho_Blox</span>
                 </div>
 
-                <!-- Avaliação 2 -->
                 <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
                     <div class="flex text-yellow-500 text-sm mb-3">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
@@ -171,7 +157,6 @@
                     <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@ZoroGameplays</span>
                 </div>
 
-                <!-- Avaliação 3 -->
                 <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
                     <div class="flex text-yellow-500 text-sm mb-3">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
@@ -183,7 +168,6 @@
             </div>
         </section>
 
-        <!-- ================= SEÇÃO FAQ (DÚVIDAS FREQUENTES) ================= -->
         <section class="max-w-7xl w-full mx-auto p-6 mb-12">
             <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-2">
                 <i class="fa-solid fa-circle-question text-[#00f0ff]"></i> Dúvidas Frequentes
@@ -213,7 +197,6 @@
         </footer>
     </div>
 
-    <!-- ================= MODAL DO CARRINHO ================= -->
     <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-[#1f2833] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-gray-800 flex flex-col">
         <div class="p-6 border-b border-gray-800 flex justify-between items-center">
             <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-shopping-cart text-[#00f0ff]"></i> Seu Carrinho</h2>
@@ -225,7 +208,6 @@
         </div>
         
         <div class="p-6 border-t border-gray-800 bg-gray-900/50">
-            <!-- CAMPO DE E-MAIL ADICIONADO AQUI -->
             <div class="mb-4">
                 <label for="checkout-email" class="block text-xs font-bold text-gray-400 mb-1">
                     <i class="fa-solid fa-envelope"></i> E-mail para receber a conta:
@@ -246,7 +228,6 @@
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
 
 
-    <!-- ================= LOGIC JAVASCRIPT ================= -->
     <script>
         function changePage(pageId) {
             document.getElementById('page-landing').classList.remove('active-page');
@@ -339,8 +320,7 @@
             // Exibe mensagem de confirmação para o cliente
             alert(`Tudo certo! Redirecionando para o pagamento seguro...\nSua conta será entregue no e-mail: ${emailInput}`);
             
-            // TODO: No futuro, você substituirá o link do Discord abaixo 
-            // pelo link do seu checkout de pagamento (Ex: GGMAX, Mercado Pago, etc)
+            // Redireciona para o suporte do Discord temporariamente
             window.open('https://discord.gg/De9Y3EVqR', '_blank');
         }
     </script>
