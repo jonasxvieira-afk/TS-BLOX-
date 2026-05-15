@@ -59,7 +59,7 @@
             Pagamento via Pix com <span class="text-white font-bold">Entrega Instantânea</span>. Pagou, recebeu a conta na hora!
         </p>
         <button onclick="changePage('page-store')" class="bg-[#00f0ff] text-black font-bold text-xl px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-[0_0_20px_#00f0ff] active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
-            ENTRAR NA LOJA <i class="fa-solid fa-铺"></i>
+            ENTRAR NA LOJA <i class="fa-solid fa-store"></i>
         </button>
     </div>
 
@@ -67,7 +67,7 @@
     <div id="page-store" class="page hidden-page min-h-screen flex flex-col">
         
         <!-- NAV BAR -->
-        <nav class="bg-[#1f2833] border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+        <nav class="bg-[#1f2833]/90 backdrop-blur-md border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
             <div class="flex items-center gap-2 cursor-pointer" onclick="changePage('page-landing')">
                 <span class="text-2xl font-extrabold text-white">TS <span class="text-[#00f0ff]">BLOX</span></span>
             </div>
@@ -85,7 +85,7 @@
 
         <!-- ALERTA DE ENTREGA -->
         <div class="bg-blue-950/40 border-b border-blue-800 text-blue-400 text-center py-2 text-sm flex items-center justify-center gap-2">
-            <i class="fa-solid fa-circle-info"></i> Sistema de entrega automática ativo. Verifique seus dados na tela pós-pagamento.
+            <i class="fa-solid fa-shield-halved"></i> Compra 100% Segura. A conta será enviada para o seu e-mail após o pagamento.
         </div>
 
         <!-- PRODUTOS -->
@@ -144,30 +144,72 @@
                     </button>
                 </div>
             </div>
-
         </main>
 
-        <!-- PAINEL DE ESTOQUE (RESTRITO / CONFIGURAÇÃO SEU USO) -->
-        <section class="max-w-7xl w-full mx-auto p-6 my-4 bg-gray-950 rounded-xl border border-gray-900">
-            <h4 class="text-sm font-bold text-gray-500 mb-3"><i class="fa-solid fa-gear"></i> CONFIGURAÇÃO DE ESTOQUE DA TS BLOX (Apenas você vê/edita)</h4>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                <div class="bg-gray-900 p-3 rounded">
-                    <p class="text-white mb-1 font-semibold">Conta Kitsune:</p>
-                    <input id="stock-p1" type="text" value="User: ts_kitsune1 | Pass: blox9982" class="w-full bg-gray-800 border border-gray-700 p-2 rounded text-gray-300">
+        <!-- ================= SEÇÃO DE AVALIAÇÕES ================= -->
+        <section class="max-w-7xl w-full mx-auto p-6 mt-4">
+            <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-2">
+                <i class="fa-solid fa-star text-yellow-500"></i> Avaliações de Clientes
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Avaliação 1 -->
+                <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
+                    <div class="flex text-yellow-500 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sm text-gray-400 italic">"Comprei a Godhuman e chegou no meu email em menos de 1 minuto! Muito confiável, o site é brabo."</p>
+                    <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@Pedrinho_Blox</span>
                 </div>
-                <div class="bg-gray-900 p-3 rounded">
-                    <p class="text-white mb-1 font-semibold">Conta Dough V2:</p>
-                    <input id="stock-p2" type="text" value="User: ts_doughv2 | Pass: master442" class="w-full bg-gray-800 border border-gray-700 p-2 rounded text-gray-300">
+
+                <!-- Avaliação 2 -->
+                <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
+                    <div class="flex text-yellow-500 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sm text-gray-400 italic">"Gostei demais do atendimento. Tive uma dúvida na hora de entrar na conta e o suporte do Discord respondeu rápido."</p>
+                    <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@ZoroGameplays</span>
                 </div>
-                <div class="bg-gray-900 p-3 rounded">
-                    <p class="text-white mb-1 font-semibold">Conta Lvl Max:</p>
-                    <input id="stock-p3" type="text" value="User: ts_maxlvl3 | Pass: security881" class="w-full bg-gray-800 border border-gray-700 p-2 rounded text-gray-300">
+
+                <!-- Avaliação 3 -->
+                <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
+                    <div class="flex text-yellow-500 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-sm text-gray-400 italic">"A conta Soul Guitar veio perfeitinha, tudo no level maximo igual estava no anúncio. Valeu TS BLOX!"</p>
+                    <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@Katakuri_V2</span>
                 </div>
+
+            </div>
+        </section>
+
+        <!-- ================= SEÇÃO FAQ (DÚVIDAS FREQUENTES) ================= -->
+        <section class="max-w-7xl w-full mx-auto p-6 mb-12">
+            <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-2">
+                <i class="fa-solid fa-circle-question text-[#00f0ff]"></i> Dúvidas Frequentes
+            </h2>
+            <div class="space-y-4">
+                
+                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                    <h4 class="text-white font-bold mb-2">1. A entrega é automática? Como eu recebo?</h4>
+                    <p class="text-sm text-gray-400">Sim! Assim que o seu Pix for aprovado, o login e a senha da conta serão exibidos na sua tela e também enviados automaticamente para o E-mail que você cadastrar no carrinho.</p>
+                </div>
+                
+                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                    <h4 class="text-white font-bold mb-2">2. Quanto tempo leva para minha conta chegar?</h4>
+                    <p class="text-sm text-gray-400">Como o pagamento é via Pix, a confirmação do banco é instantânea. A entrega costuma levar de 1 a 3 minutos após o pagamento.</p>
+                </div>
+
+                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                    <h4 class="text-white font-bold mb-2">3. As contas são seguras? Posso trocar a senha?</h4>
+                    <p class="text-sm text-gray-400">Totalmente seguras. As nossas contas são criadas do zero, não possuem nenhum e-mail ou telefone vinculados (são 100% limpas). Assim que você fizer o login pela primeira vez, você mesmo poderá vincular o seu e-mail pessoal e alterar a senha.</p>
+                </div>
+
             </div>
         </section>
 
         <footer class="bg-gray-950 p-6 text-center text-sm text-gray-600 border-t border-gray-900 mt-auto">
-            &copy; 2026 TS BLOX. Todos os direitos reservados. Entrega automática via PIX.
+            &copy; 2026 TS BLOX. Todos os direitos reservados. Entrega automática e suporte 24h.
         </footer>
     </div>
 
@@ -177,68 +219,32 @@
             <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-shopping-cart text-[#00f0ff]"></i> Seu Carrinho</h2>
             <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl cursor-pointer">&times;</button>
         </div>
+        
         <div id="cart-items" class="flex-1 p-6 overflow-y-auto space-y-4">
             <p class="text-gray-500 text-center py-8">Seu carrinho está vazio.</p>
         </div>
+        
         <div class="p-6 border-t border-gray-800 bg-gray-900/50">
+            <!-- CAMPO DE E-MAIL ADICIONADO AQUI -->
+            <div class="mb-4">
+                <label for="checkout-email" class="block text-xs font-bold text-gray-400 mb-1">
+                    <i class="fa-solid fa-envelope"></i> E-mail para receber a conta:
+                </label>
+                <input type="email" id="checkout-email" placeholder="seuemail@gmail.com" class="w-full bg-gray-800 border border-gray-700 text-white rounded p-3 text-sm focus:outline-none focus:border-[#00f0ff] transition-colors shadow-inner" required>
+            </div>
+
             <div class="flex justify-between items-center mb-4">
                 <span class="text-gray-400">Total:</span>
                 <span id="cart-total" class="text-2xl font-bold text-[#00f0ff]">R$ 0,00</span>
             </div>
-            <button onclick="openPixModal()" class="w-full bg-[#00f0ff] text-black font-bold py-3 rounded-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2">
-                <i class="fa-brands fa-pix"></i> PAGAR COM PIX
+            <button onclick="processCheckout()" class="w-full bg-[#00f0ff] text-black font-bold py-3 rounded-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2">
+                <i class="fa-solid fa-bolt"></i> FINALIZAR COMPRA
             </button>
         </div>
     </div>
+    
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
 
-    <!-- ================= MODAL DE PAGAMENTO PIX E ENTREGA ================= -->
-    <div id="pix-modal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 hidden">
-        <div class="bg-[#1f2833] w-full max-w-md rounded-xl border border-gray-700 p-6 flex flex-col items-center text-center relative animate-fade-in">
-            
-            <button onclick="closePixModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl cursor-pointer">&times;</button>
-
-            <!-- Etapa 1: Pagar -->
-            <div id="pix-step-pay" class="w-full">
-                <span class="bg-teal-500/20 text-teal-400 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-widest"><i class="fa-brands fa-pix"></i> Pix Copia e Cola</span>
-                <h3 class="text-xl font-bold text-white mt-3">Aguardando Pagamento</h3>
-                <p class="text-xs text-gray-400 mt-1 mb-4">Escaneie o QR Code ou use o Copia e Cola abaixo</p>
-                
-                <!-- Qr Code Simulado -->
-                <div class="bg-white p-3 rounded-lg inline-block mb-4">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=TSBLOX-Simulacao-Pix-Aprovado" alt="QR Code Pix">
-                </div>
-
-                <div class="w-full bg-gray-900 p-2.5 rounded border border-gray-800 text-xs text-gray-300 flex justify-between items-center mb-4">
-                    <span class="truncate font-mono mr-2">tsblox0394820394820349820394820394820394pix</span>
-                    <button onclick="alert('Código Copiado!')" class="bg-gray-800 px-3 py-1 rounded text-[#00f0ff] hover:bg-gray-750">Copiar</button>
-                </div>
-
-                <button onclick="simulatePaymentApproval()" class="w-full bg-green-500 text-black font-bold py-2.5 rounded hover:bg-green-400 transition-colors cursor-pointer flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-circle-check"></i> CONFIRMAR PAGAMENTO (Simular)
-                </button>
-            </div>
-
-            <!-- Etapa 2: Entrega Pronta -->
-            <div id="pix-step-delivery" class="w-full hidden">
-                <div class="text-5xl text-green-400 mb-2 animate-bounce">
-                    <i class="fa-solid fa-circle-check"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-white">Pagamento Aprovado!</h3>
-                <p class="text-sm text-gray-400 mt-1 mb-4">Aqui está o acesso instantâneo da sua conta:</p>
-
-                <!-- Box de Entrega de Dados -->
-                <div id="credentials-box" class="space-y-3">
-                    <!-- Gerado dinamicamente com base no estoque cadastrado acima -->
-                </div>
-
-                <div class="mt-6 bg-amber-500/10 border border-amber-800/60 p-3 rounded text-left text-xs text-amber-400">
-                    <i class="fa-solid fa-triangle-exclamation"></i> **Importante:** Tire um print ou copie esses dados agora. Eles somem ao fechar a janela. Caso precise de ajuda, entre no nosso <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="underline font-bold">Discord</a>.
-                </div>
-            </div>
-
-        </div>
-    </div>
 
     <!-- ================= LOGIC JAVASCRIPT ================= -->
     <script>
@@ -314,52 +320,28 @@
             cartTotal.innerText = `R$ ${total.toFixed(2)}`;
         }
 
-        // --- Fluxo do Pix e Entrega Automática ---
-        function openPixModal() {
+        // --- Nova Função de Checkout (Sem simulação de Pix) ---
+        function processCheckout() {
             if (cart.length === 0) {
                 alert('Adicione itens no carrinho primeiro!');
                 return;
             }
-            // Resetar etapas do modal
-            document.getElementById('pix-step-pay').classList.remove('hidden');
-            document.getElementById('pix-step-delivery').classList.add('hidden');
+
+            const emailInput = document.getElementById('checkout-email').value;
             
-            // Abrir modal
-            document.getElementById('pix-modal').classList.remove('hidden');
-        }
+            // Verificação básica se o cliente digitou um e-mail com "@"
+            if (!emailInput || !emailInput.includes('@')) {
+                alert('Por favor, digite um E-mail válido para receber a sua conta.');
+                document.getElementById('checkout-email').focus();
+                return;
+            }
 
-        function closePixModal() {
-            document.getElementById('pix-modal').classList.add('hidden');
-        }
-
-        function simulatePaymentApproval() {
-            const deliveryBox = document.getElementById('credentials-box');
-            deliveryBox.innerHTML = ''; // Limpa envios anteriores
-
-            // Busca os dados do estoque configurado para cada item no carrinho
-            cart.forEach(item => {
-                const stockInput = document.getElementById(`stock-${item.id}`);
-                const credentials = stockInput ? stockInput.value : "Estoque esgotado! Contate o suporte no Discord.";
-                
-                for(let i = 0; i < item.quantity; i++) {
-                    deliveryBox.innerHTML += `
-                        <div class="bg-gray-900 p-3 rounded-lg border border-green-500/30 text-left">
-                            <p class="text-xs text-green-400 font-bold mb-1"><i class="fa-solid fa-gift"></i> ${item.name} (#${i+1}):</p>
-                            <div class="bg-black p-2 rounded text-xs font-mono text-white flex justify-between">
-                                <span>${credentials}</span>
-                            </div>
-                        </div>
-                    `;
-                }
-            });
-
-            // Transição de tela de carregamento para entrega
-            document.getElementById('pix-step-pay').classList.add('hidden');
-            document.getElementById('pix-step-delivery').classList.remove('hidden');
-
-            // Limpa o carrinho após a compra feita
-            cart = [];
-            updateCartUI();
+            // Exibe mensagem de confirmação para o cliente
+            alert(`Tudo certo! Redirecionando para o pagamento seguro...\nSua conta será entregue no e-mail: ${emailInput}`);
+            
+            // TODO: No futuro, você substituirá o link do Discord abaixo 
+            // pelo link do seu checkout de pagamento (Ex: GGMAX, Mercado Pago, etc)
+            window.open('https://discord.gg/De9Y3EVqR', '_blank');
         }
     </script>
 </body>
