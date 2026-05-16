@@ -52,19 +52,59 @@
 </head>
 <body>
 
-    <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center justify-center bg-radial from-[#121c24] to-[#0b0c10] px-4 text-center">
-        <div class="animate-pulse mb-6 text-7xl text-[#00f0ff]">
+    <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center bg-radial from-[#121c24] to-[#0b0c10] px-4 py-16 text-center justify-center">
+        
+        <div class="animate-pulse mb-4 text-7xl text-[#00f0ff]">
             <i class="fa-solid fa-bolt"></i>
         </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4 tracking-wider">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-3 tracking-wider">
             TS <span class="text-[#00f0ff] neon-text">BLOX</span>
         </h1>
-        <p class="text-gray-400 text-lg md:text-xl max-w-md mb-8">
-            Pagamento via Pix com <span class="text-white font-bold">Entrega Instantânea</span>. Pagou, recebeu a conta na hora!
+        <p class="text-gray-400 text-lg md:text-xl max-w-xl mb-12">
+            A maior e mais rápida fornecedora de contas prontas para <span class="text-white font-bold">Blox Fruits</span>. Pagou via Pix, recebeu na hora!
         </p>
-        <button onclick="changePage('page-store')" class="bg-[#00f0ff] text-black font-bold text-xl px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-[0_0_20px_#00f0ff] active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
-            ENTRAR NA LOJA <i class="fa-solid fa-store"></i>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl w-full mb-12 text-left">
+            
+            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-sm">
+                <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-bolt-lightning"></i></div>
+                <h4 class="text-white font-bold text-base mb-1">Entrega Automática</h4>
+                <p class="text-xs text-gray-400">O sistema envia os dados de login instantaneamente após a confirmação do Pix.</p>
+            </div>
+
+            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-sm">
+                <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-shield-virus"></i></div>
+                <h4 class="text-white font-bold text-base mb-1">100% Seguro</h4>
+                <p class="text-xs text-gray-400">Contas criadas do zero, totalmente limpas, sem e-mail ou telefone vinculados.</p>
+            </div>
+
+            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-sm">
+                <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-headset"></i></div>
+                <h4 class="text-white font-bold text-base mb-1">Suporte no Discord</h4>
+                <p class="text-xs text-gray-400">Nossa equipe está pronta para tirar suas dúvidas e prestar suporte pós-venda.</p>
+            </div>
+
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-8 md:gap-16 max-w-3xl w-full mb-12 border-y border-gray-800/60 py-6">
+            <div>
+                <span class="block text-3xl font-extrabold text-white text-[#00f0ff] neon-text">+1,500</span>
+                <span class="text-xs text-gray-400 uppercase tracking-wider">Contas Entregues</span>
+            </div>
+            <div>
+                <span class="block text-3xl font-extrabold text-white text-[#00f0ff] neon-text">&lt; 3 min</span>
+                <span class="text-xs text-gray-400 uppercase tracking-wider">Tempo de Envio</span>
+            </div>
+            <div>
+                <span class="block text-3xl font-extrabold text-white text-[#00f0ff] neon-text">100%</span>
+                <span class="text-xs text-gray-400 uppercase tracking-wider">Clientes Satisfeitos</span>
+            </div>
+        </div>
+
+        <button onclick="changePage('page-store')" class="bg-[#00f0ff] text-black font-bold text-xl px-10 py-5 rounded-full shadow-lg hover:scale-105 hover:shadow-[0_0_25px_#00f0ff] active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
+            VER PRODUTOS DISPONÍVEIS <i class="fa-solid fa-arrow-right"></i>
         </button>
+
     </div>
 
     <div id="page-store" class="page hidden-page min-h-screen flex flex-col">
@@ -203,9 +243,7 @@
     <div id="details-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
         <div class="bg-[#1f2833] max-w-lg w-full rounded-2xl border border-gray-800 p-6 shadow-2xl relative flex flex-col max-h-[90vh]">
             <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl cursor-pointer transition-colors">&times;</button>
-            
-            <div id="modal-content" class="overflow-y-auto pr-2 space-y-4">
-                </div>
+            <div id="modal-content" class="overflow-y-auto pr-2 space-y-4"></div>
         </div>
     </div>
 
@@ -253,7 +291,6 @@
             window.scrollTo(0, 0);
         }
 
-        // DADOS DAS CONTAS (O QUE VEM E CHANCES)
         const productDetails = {
             p1: {
                 name: "Conta Godhuman + Kitsune",
@@ -359,7 +396,6 @@
             document.getElementById('details-modal').classList.add('hidden');
         }
 
-        // Fechar modal ao clicar fora dele
         window.onclick = function(event) {
             const modal = document.getElementById('details-modal');
             if (event.target == modal) {
