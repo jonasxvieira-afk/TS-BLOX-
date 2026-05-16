@@ -19,13 +19,13 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #0b0c10;
+            background-color: #05070a;
             color: #c5c6c7;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* ----- SISTEMA DE PARTICULAS / FUNDO ANIMADO ----- */
+        /* ----- SISTEMA DE PARTÍCULAS ESPACIAIS INTENSIFICADO ----- */
         .bg-particles {
             position: fixed;
             top: 0;
@@ -33,31 +33,54 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #121c24 0%, #0b0c10 100%);
+            background: radial-gradient(circle at 50% 50%, #0d1b2a 0%, #05070a 100%);
             overflow: hidden;
         }
+        
+        /* Camada 1: Partículas Maiores e Azuis */
+        .bg-particles::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            top: 0;
+            left: 0;
+            background-image: 
+                radial-gradient(circle, #00f0ff 2px, transparent 3px),
+                radial-gradient(circle, #00f0ff 3px, transparent 4px),
+                radial-gradient(circle, rgba(0,240,255,0.4) 5px, transparent 6px);
+            background-size: 15% 10%, 25% 15%, 35% 20%;
+            background-position: 0 0, 50px 100px, 120px 40px;
+            opacity: 0.6;
+            animation: moveSpace 25s linear infinite;
+        }
+
+        /* Camada 2: Partículas Roxas e Brilhos Menores */
         .bg-particles::after {
             content: '';
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #00f0ff;
-            border-radius: 50%;
-            box-shadow: 
-                20vw 10vh 4px #00f0ff, 80vw 20vh 6px #00f0ff, 40vw 50vh 3px #00f0ff,
-                15vw 80vh 5px #00f0ff, 70vw 70vh 4px #00f0ff, 90vw 40vh 5px #00f0ff,
-                30vw 30vh 6px #00f0ff, 60vw 85vh 3px #00f0ff, 50vw 15vh 5px #00f0ff;
-            opacity: 0.3;
-            animation: floatParticles 20s linear infinite;
-        }
-        @keyframes floatParticles {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-1000px) rotate(360deg); }
+            width: 100%;
+            height: 200%;
+            top: 0;
+            left: 0;
+            background-image: 
+                radial-gradient(circle, #9d4edd 2px, transparent 3px),
+                radial-gradient(circle, #ffffff 1px, transparent 2px),
+                radial-gradient(circle, rgba(157,78,221,0.5) 4px, transparent 5px);
+            background-size: 20% 12%, 30% 18%, 40% 22%;
+            background-position: 30px 50px, 90px 10px, 10px 150px;
+            opacity: 0.5;
+            animation: moveSpace 40s linear infinite;
         }
 
-        /* ----- EFEITOS NEON E TEXTOS ----- */
+        @keyframes moveSpace {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        /* ----- EFEITOS NEON ----- */
         .neon-text {
-            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00f0ff;
+            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 35px #00f0ff;
         }
         
         /* ----- ENTRADAS SUAVES (FADE IN) ----- */
@@ -69,7 +92,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ----- CARDS HOLOGRÁFICOS INTELIGENTES ----- */
+        /* ----- CARDS HOLOGRÁFICOS ----- */
         .hologram-card {
             position: relative;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -77,13 +100,13 @@
         .hologram-card:hover {
             transform: translateY(-8px) scale(1.02);
             border-color: #00f0ff;
-            box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.3), 0 0 15px rgba(0, 240, 255, 0.2);
+            box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.4), 0 0 20px rgba(0, 240, 255, 0.2);
         }
         .hologram-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, transparent 0%, rgba(0, 240, 255, 0.05) 50%, transparent 100%);
+            background: linear-gradient(135deg, transparent 0%, rgba(0, 240, 255, 0.08) 50%, transparent 100%);
             transform: translateX(-100%);
             transition: transform 0.6s ease;
             pointer-events: none;
@@ -100,10 +123,10 @@
         }
         @keyframes neonPulse {
             0% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.4); }
-            100% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.8); }
+            100% { box-shadow: 0 0 30px rgba(0, 240, 255, 0.9); }
         }
 
-        /* ----- TROCA DE PÁGINA COM SLIDE ----- */
+        /* ----- TROCA DE PÁGINA ----- */
         .page {
             transition: all 0.5s ease-in-out;
             position: absolute;
@@ -144,19 +167,19 @@
 
         <div class="fade-in-up grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl w-full mb-12 text-left" style="animation-delay: 0.2s;">
             
-            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
+            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
                 <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-bolt-lightning animate-pulse"></i></div>
                 <h4 class="text-white font-bold text-base mb-1">Entrega Automática</h4>
                 <p class="text-xs text-gray-400">O sistema envia os dados de login instantaneamente após a confirmação do Pix.</p>
             </div>
 
-            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
+            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
                 <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-shield-virus"></i></div>
                 <h4 class="text-white font-bold text-base mb-1">100% Seguro</h4>
                 <p class="text-xs text-gray-400">Contas criadas do zero, totalmente limpas, sem e-mail ou telefone vinculados.</p>
             </div>
 
-            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
+            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
                 <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-headset"></i></div>
                 <h4 class="text-white font-bold text-base mb-1">Suporte no Discord</h4>
                 <p class="text-xs text-gray-400">Nossa equipe está pronta para tirar suas dúvidas e prestar suporte pós-venda.</p>
@@ -304,7 +327,7 @@
                 </div>
                 <div class="bg-gray-900/60 backdrop-blur-sm p-5 rounded-xl border border-gray-800">
                     <h4 class="text-white font-bold mb-2">2. Quanto tempo leva para minha conta chegar?</h4>
-                    <p class="text-sm text-gray-400">Como o pagamento é via Pix, a confirmação do banco é instantânea. A entrega costuma levar de 1 a 3 minutos após o pagamento.</p>
+                    <p class="text-sm text-gray-400">Como o pagamento é via Pix, a confirmação do banco é instantânea. A entrega costuma levar de 1 a 3 minutes após o pagamento.</p>
                 </div>
                 <div class="bg-gray-900/60 backdrop-blur-sm p-5 rounded-xl border border-gray-800">
                     <h4 class="text-white font-bold mb-2">3. As contas são seguras? Posso trocar a senha?</h4>
@@ -354,7 +377,6 @@
     </div>
     
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
-
 
     <script>
         function changePage(pageId) {
@@ -570,4 +592,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
