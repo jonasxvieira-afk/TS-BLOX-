@@ -22,14 +22,88 @@
             background-color: #0b0c10;
             color: #c5c6c7;
             overflow-x: hidden;
+            position: relative;
         }
+
+        /* ----- SISTEMA DE PARTICULAS / FUNDO ANIMADO ----- */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #121c24 0%, #0b0c10 100%);
+            overflow: hidden;
+        }
+        .bg-particles::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00f0ff;
+            border-radius: 50%;
+            box-shadow: 
+                20vw 10vh 4px #00f0ff, 80vw 20vh 6px #00f0ff, 40vw 50vh 3px #00f0ff,
+                15vw 80vh 5px #00f0ff, 70vw 70vh 4px #00f0ff, 90vw 40vh 5px #00f0ff,
+                30vw 30vh 6px #00f0ff, 60vw 85vh 3px #00f0ff, 50vw 15vh 5px #00f0ff;
+            opacity: 0.3;
+            animation: floatParticles 20s linear infinite;
+        }
+        @keyframes floatParticles {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-1000px) rotate(360deg); }
+        }
+
+        /* ----- EFEITOS NEON E TEXTOS ----- */
         .neon-text {
-            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00f0ff;
         }
-        .neon-border:hover {
-            box-shadow: 0 0 15px #00f0ff;
+        
+        /* ----- ENTRADAS SUAVES (FADE IN) ----- */
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ----- CARDS HOLOGRÁFICOS INTELIGENTES ----- */
+        .hologram-card {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hologram-card:hover {
+            transform: translateY(-8px) scale(1.02);
             border-color: #00f0ff;
+            box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.3), 0 0 15px rgba(0, 240, 255, 0.2);
         }
+        .hologram-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(0, 240, 255, 0.05) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            pointer-events: none;
+        }
+        .hologram-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* ----- BOTÃO SCI-FI PULSANTE ----- */
+        .btn-scifi {
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            animation: neonPulse 2s infinite alternate;
+        }
+        @keyframes neonPulse {
+            0% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.8); }
+        }
+
+        /* ----- TROCA DE PÁGINA COM SLIDE ----- */
         .page {
             transition: all 0.5s ease-in-out;
             position: absolute;
@@ -40,45 +114,49 @@
         .hidden-page {
             opacity: 0;
             pointer-events: none;
-            transform: translateY(20px);
+            transform: scale(0.96);
         }
         .active-page {
             opacity: 1;
             pointer-events: auto;
-            transform: translateY(0);
+            transform: scale(1);
             position: relative;
         }
     </style>
 </head>
 <body>
 
-    <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center bg-radial from-[#121c24] to-[#0b0c10] px-4 py-16 text-center justify-center">
-        
-        <div class="animate-pulse mb-4 text-7xl text-[#00f0ff]">
-            <i class="fa-solid fa-bolt"></i>
-        </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-3 tracking-wider">
-            TS <span class="text-[#00f0ff] neon-text">BLOX</span>
-        </h1>
-        <p class="text-gray-400 text-lg md:text-xl max-w-xl mb-12">
-            A maior e mais rápida fornecedora de contas prontas para <span class="text-white font-bold">Blox Fruits</span>. Pagou via Pix, recebeu na hora!
-        </p>
+    <div class="bg-particles"></div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl w-full mb-12 text-left">
+    <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center px-4 py-16 text-center justify-center">
+        
+        <div class="fade-in-up flex flex-col items-center">
+            <div class="animate-bounce mb-4 text-7xl text-[#00f0ff] filter drop-shadow-[0_0_15px_#00f0ff]">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <h1 class="text-6xl md:text-8xl font-extrabold text-white mb-3 tracking-wider">
+                TS <span class="text-[#00f0ff] neon-text">BLOX</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-xl mb-12">
+                A maior e mais rápida fornecedora de contas prontas para <span class="text-white font-bold">Blox Fruits</span>. Pagou via Pix, recebeu na hora!
+            </p>
+        </div>
+
+        <div class="fade-in-up grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl w-full mb-12 text-left" style="animation-delay: 0.2s;">
             
-            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-sm">
-                <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-bolt-lightning"></i></div>
+            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
+                <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-bolt-lightning animate-pulse"></i></div>
                 <h4 class="text-white font-bold text-base mb-1">Entrega Automática</h4>
                 <p class="text-xs text-gray-400">O sistema envia os dados de login instantaneamente após a confirmação do Pix.</p>
             </div>
 
-            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-sm">
+            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
                 <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-shield-virus"></i></div>
                 <h4 class="text-white font-bold text-base mb-1">100% Seguro</h4>
                 <p class="text-xs text-gray-400">Contas criadas do zero, totalmente limpas, sem e-mail ou telefone vinculados.</p>
             </div>
 
-            <div class="bg-[#1f2833]/50 p-5 rounded-xl border border-gray-800 backdrop-blur-sm">
+            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
                 <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-headset"></i></div>
                 <h4 class="text-white font-bold text-base mb-1">Suporte no Discord</h4>
                 <p class="text-xs text-gray-400">Nossa equipe está pronta para tirar suas dúvidas e prestar suporte pós-venda.</p>
@@ -86,100 +164,100 @@
 
         </div>
 
-        <div class="flex flex-wrap justify-center gap-8 md:gap-16 max-w-3xl w-full mb-12 border-y border-gray-800/60 py-6">
+        <div class="fade-in-up flex flex-wrap justify-center gap-8 md:gap-16 max-w-3xl w-full mb-12 border-y border-gray-800/40 py-6" style="animation-delay: 0.3s;">
             <div>
-                <span class="block text-3xl font-extrabold text-white text-[#00f0ff] neon-text">+1,500</span>
+                <span class="block text-3xl font-extrabold text-[#00f0ff] neon-text">+1,500</span>
                 <span class="text-xs text-gray-400 uppercase tracking-wider">Contas Entregues</span>
             </div>
             <div>
-                <span class="block text-3xl font-extrabold text-white text-[#00f0ff] neon-text">&lt; 1 min</span>
+                <span class="block text-3xl font-extrabold text-[#00f0ff] neon-text">&lt; 3 min</span>
                 <span class="text-xs text-gray-400 uppercase tracking-wider">Tempo de Envio</span>
             </div>
             <div>
-                <span class="block text-3xl font-extrabold text-white text-[#00f0ff] neon-text">100%</span>
+                <span class="block text-3xl font-extrabold text-[#00f0ff] neon-text">100%</span>
                 <span class="text-xs text-gray-400 uppercase tracking-wider">Clientes Satisfeitos</span>
             </div>
         </div>
 
-        <button onclick="changePage('page-store')" class="bg-[#00f0ff] text-black font-bold text-xl px-10 py-5 rounded-full shadow-lg hover:scale-105 hover:shadow-[0_0_25px_#00f0ff] active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
-            VER PRODUTOS DISPONÍVEIS <i class="fa-solid fa-arrow-right"></i>
+        <button onclick="changePage('page-store')" class="btn-scifi bg-[#00f0ff] text-black font-bold text-xl px-10 py-5 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
+            VER PRODUTOS DISPONÍVEIS <i class="fa-solid fa-arrow-right animate-ping" style="animation-duration: 2s;"></i>
         </button>
 
     </div>
 
     <div id="page-store" class="page hidden-page min-h-screen flex flex-col">
         
-        <nav class="bg-[#1f2833]/90 backdrop-blur-md border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+        <nav class="bg-[#1f2833]/80 backdrop-blur-lg border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
             <div class="flex items-center gap-2 cursor-pointer" onclick="changePage('page-landing')">
                 <span class="text-2xl font-extrabold text-white">TS <span class="text-[#00f0ff]">BLOX</span></span>
             </div>
             
             <div class="flex items-center gap-4">
-                <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 transition-colors">
+                <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 transition-transform hover:scale-105">
                     <i class="fa-brands fa-discord"></i> Suporte
                 </a>
                 <button onclick="toggleCart()" class="relative p-2 text-white hover:text-[#00f0ff] transition-colors cursor-pointer">
                     <i class="fa-solid fa-shopping-cart text-2xl"></i>
-                    <span id="cart-count" class="absolute -top-1 -right-2 bg-[#00f0ff] text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    <span id="cart-count" class="absolute -top-1 -right-2 bg-[#00f0ff] text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center animate-pulse">0</span>
                 </button>
             </div>
         </nav>
 
-        <div class="bg-blue-950/40 border-b border-blue-800 text-blue-400 text-center py-2 text-sm flex items-center justify-center gap-2">
-            <i class="fa-solid fa-shield-halved"></i> Compra 100% Segura. A conta será enviada para o seu e-mail após o pagamento.
+        <div class="bg-blue-950/30 backdrop-blur-sm border-b border-blue-900/50 text-blue-400 text-center py-2 text-sm flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-halved animate-pulse"></i> Compra 100% Segura. A conta será enviada para o seu e-mail após o pagamento.
         </div>
 
         <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-4">
             
-            <div onclick="openDetails('p1')" class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between cursor-pointer group">
+            <div onclick="openDetails('p1')" class="hologram-card bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
                 <div class="p-6">
-                    <div class="h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                        <img src="https://i.ibb.co/v6YgM2Xb/ts-blox-kitsune.jpg" class="h-full w-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105" alt="Conta Godhuman + Kitsune">
+                    <div class="h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden bg-black/20">
+                        <img src="https://i.ibb.co/v6YgM2Xb/ts-blox-kitsune.jpg" class="h-full w-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105" alt="Conta Godhuman + Kitsune">
                     </div>
-                    <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase">Deus Humano</span>
+                    <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Deus Humano</span>
                     <h3 class="text-xl font-bold text-white mt-2 group-hover:text-[#00f0ff] transition-colors">Conta Godhuman + Kitsune</h3>
                     <p class="text-sm text-gray-400 mt-2">Level Máximo Garantido, Fruta Kitsune ativa e Estilo de Luta Completo.</p>
-                    <span class="text-xs text-[#00f0ff] block mt-3 font-semibold"><i class="fa-solid fa-eye"></i> Clique para ver detalhes</span>
+                    <span class="text-xs text-[#00f0ff] block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye animate-pulse"></i> Clique para ver detalhes</span>
                 </div>
-                <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between" onclick="event.stopPropagation();">
+                <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
                     <span class="text-2xl font-bold text-[#00f0ff]">R$ 49,90</span>
-                    <button onclick="addToCart('Conta Godhuman + Kitsune', 49.90, 'p1')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                    <button onclick="addToCart('Conta Godhuman + Kitsune', 49.90, 'p1')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#00f0ff]">
                         <i class="fa-solid fa-cart-plus"></i> Comprar
                     </button>
                 </div>
             </div>
 
-            <div onclick="openDetails('p2')" class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between cursor-pointer group">
+            <div onclick="openDetails('p2')" class="hologram-card bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
                 <div class="p-6">
-                    <div class="bg-gray-900/50 h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                        <img src="https://i.ibb.co/C5fP0vFp/soul-guitar.png" class="h-40 w-auto object-contain transition-transform duration-300 group-hover:scale-110" alt="Soul Guitar">
+                    <div class="bg-black/20 h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://i.ibb.co/C5fP0vFp/soul-guitar.png" class="h-40 w-auto object-contain transition-transform duration-500 group-hover:scale-110" alt="Soul Guitar">
                     </div>
-                    <span class="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded font-bold uppercase">Mítica</span>
+                    <span class="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Mítica</span>
                     <h3 class="text-xl font-bold text-white mt-2 group-hover:text-[#00f0ff] transition-colors">Conta Soul Guitar + Dough V2</h3>
                     <p class="text-sm text-gray-400 mt-2">Soul Guitar lendária equipada e fruta Massa despertada no máximo.</p>
-                    <span class="text-xs text-[#00f0ff] block mt-3 font-semibold"><i class="fa-solid fa-eye"></i> Clique para ver detalhes</span>
+                    <span class="text-xs text-[#00f0ff] block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye animate-pulse"></i> Clique para ver detalhes</span>
                 </div>
-                <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between" onclick="event.stopPropagation();">
+                <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
                     <span class="text-2xl font-bold text-[#00f0ff]">R$ 39,90</span>
-                    <button onclick="addToCart('Conta Soul Guitar + Dough V2', 39.90, 'p2')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                    <button onclick="addToCart('Conta Soul Guitar + Dough V2', 39.90, 'p2')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#00f0ff]">
                         <i class="fa-solid fa-cart-plus"></i> Comprar
                     </button>
                 </div>
             </div>
 
-            <div onclick="openDetails('p3')" class="bg-[#1f2833] rounded-xl overflow-hidden border border-gray-800 transition-all duration-300 neon-border flex flex-col justify-between cursor-pointer group">
+            <div onclick="openDetails('p3')" class="hologram-card bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
                 <div class="p-6">
-                    <div class="bg-gray-900/50 h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                        <img src="https://i.ibb.co/v4g0997Y/level-max.png" class="h-40 w-auto object-contain transition-transform duration-300 group-hover:scale-110" alt="Conta Level Max">
+                    <div class="bg-black/20 h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <img src="https://i.ibb.co/v4g0997Y/level-max.png" class="h-40 w-auto object-contain transition-transform duration-500 group-hover:scale-110" alt="Conta Level Max">
                     </div>
-                    <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded font-bold uppercase">Iniciante</span>
+                    <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Iniciante</span>
                     <h3 class="text-xl font-bold text-white mt-2 group-hover:text-[#00f0ff] transition-colors">Conta Inicial Level Max</h3>
                     <p class="text-sm text-gray-400 mt-2">Conta limpa lvl 2550 pronta para você customizar e iniciar jornada.</p>
-                    <span class="text-xs text-[#00f0ff] block mt-3 font-semibold"><i class="fa-solid fa-eye"></i> Clique para ver detalhes</span>
+                    <span class="text-xs text-[#00f0ff] block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye animate-pulse"></i> Clique para ver detalhes</span>
                 </div>
-                <div class="p-6 bg-gray-900/50 border-t border-gray-800 flex items-center justify-between" onclick="event.stopPropagation();">
+                <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
                     <span class="text-2xl font-bold text-[#00f0ff]">R$ 19,90</span>
-                    <button onclick="addToCart('Conta Inicial Level Max', 19.90, 'p3')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer">
+                    <button onclick="addToCart('Conta Inicial Level Max', 19.90, 'p3')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#00f0ff]">
                         <i class="fa-solid fa-cart-plus"></i> Comprar
                     </button>
                 </div>
@@ -191,21 +269,21 @@
                 <i class="fa-solid fa-star text-yellow-500"></i> Avaliações de Clientes
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
+                <div class="bg-[#1f2833]/50 backdrop-blur-sm p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff]/40 transition-all">
                     <div class="flex text-yellow-500 text-sm mb-3">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
                     <p class="text-sm text-gray-400 italic">"Comprei a Godhuman e chegou no meu email em menos de 1 minuto! Muito confiável, o site é brabo."</p>
                     <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@Pedrinho_Blox</span>
                 </div>
-                <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
+                <div class="bg-[#1f2833]/50 backdrop-blur-sm p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff]/40 transition-all">
                     <div class="flex text-yellow-500 text-sm mb-3">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
                     <p class="text-sm text-gray-400 italic">"Gostei demais do atendimento. Tive uma dúvida na hora de entrar na conta e o suporte do Discord respondeu rápido."</p>
                     <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@ZoroGameplays</span>
                 </div>
-                <div class="bg-[#1f2833] p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff] transition-colors">
+                <div class="bg-[#1f2833]/50 backdrop-blur-sm p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff]/40 transition-all">
                     <div class="flex text-yellow-500 text-sm mb-3">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
@@ -220,28 +298,28 @@
                 <i class="fa-solid fa-circle-question text-[#00f0ff]"></i> Dúvidas Frequentes
             </h2>
             <div class="space-y-4">
-                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                <div class="bg-gray-900/60 backdrop-blur-sm p-5 rounded-xl border border-gray-800">
                     <h4 class="text-white font-bold mb-2">1. A entrega é automática? Como eu recebo?</h4>
                     <p class="text-sm text-gray-400">Sim! Assim que o seu Pix for aprovado, o login e a senha da conta serão exibidos na sua tela e também enviados automaticamente para o E-mail que você cadastrar no carrinho.</p>
                 </div>
-                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                <div class="bg-gray-900/60 backdrop-blur-sm p-5 rounded-xl border border-gray-800">
                     <h4 class="text-white font-bold mb-2">2. Quanto tempo leva para minha conta chegar?</h4>
                     <p class="text-sm text-gray-400">Como o pagamento é via Pix, a confirmação do banco é instantânea. A entrega costuma levar de 1 a 3 minutos após o pagamento.</p>
                 </div>
-                <div class="bg-gray-900 p-5 rounded-xl border border-gray-800">
+                <div class="bg-gray-900/60 backdrop-blur-sm p-5 rounded-xl border border-gray-800">
                     <h4 class="text-white font-bold mb-2">3. As contas são seguras? Posso trocar a senha?</h4>
                     <p class="text-sm text-gray-400">Totalmente seguras. As nossas contas são criadas do zero, não possuem nenhum e-mail ou telefone vinculados (são 100% limpas). Assim que você fizer o login pela primeira vez, você mesmo poderá vincular o seu e-mail pessoal e alterar a senha.</p>
                 </div>
             </div>
         </section>
 
-        <footer class="bg-gray-950 p-6 text-center text-sm text-gray-600 border-t border-gray-900 mt-auto">
+        <footer class="bg-gray-950/80 backdrop-blur-md p-6 text-center text-sm text-gray-600 border-t border-gray-900 mt-auto">
             &copy; 2026 TS BLOX. Todos os direitos reservados. Entrega automática e suporte 24h.
         </footer>
     </div>
 
-    <div id="details-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
-        <div class="bg-[#1f2833] max-w-lg w-full rounded-2xl border border-gray-800 p-6 shadow-2xl relative flex flex-col max-h-[90vh]">
+    <div id="details-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden backdrop-blur-md transition-all">
+        <div class="bg-[#1f2833] max-w-lg w-full rounded-2xl border border-gray-700 p-6 shadow-2xl relative flex flex-col max-h-[90vh] scale-95 transition-transform duration-300" id="modal-container">
             <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl cursor-pointer transition-colors">&times;</button>
             <div id="modal-content" class="overflow-y-auto pr-2 space-y-4"></div>
         </div>
@@ -269,7 +347,7 @@
                 <span class="text-gray-400">Total:</span>
                 <span id="cart-total" class="text-2xl font-bold text-[#00f0ff]">R$ 0,00</span>
             </div>
-            <button onclick="processCheckout()" class="w-full bg-[#00f0ff] text-black font-bold py-3 rounded-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2">
+            <button onclick="processCheckout()" class="w-full bg-[#00f0ff] text-black font-bold py-3 rounded-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg hover:shadow-[0_0_15px_#00f0ff]">
                 <i class="fa-solid fa-bolt"></i> FINALIZAR COMPRA
             </button>
         </div>
@@ -345,6 +423,7 @@
         function openDetails(id) {
             const product = productDetails[id];
             const modal = document.getElementById('details-modal');
+            const container = document.getElementById('modal-container');
             const content = document.getElementById('modal-content');
 
             let guaranteedHtml = '';
@@ -365,7 +444,7 @@
                     <h4 class="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-2">
                         <i class="fa-solid fa-shield-check"></i> 100% Garantido na Conta:
                     </h4>
-                    <ul class="space-y-2 bg-gray-900/40 p-3 rounded-xl border border-emerald-950/30">
+                    <ul class="space-y-2 bg-black/30 p-3 rounded-xl border border-emerald-950/20">
                         ${guaranteedHtml}
                     </ul>
                 </div>
@@ -374,7 +453,7 @@
                     <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400 mb-2">
                         <i class="fa-solid fa-dice"></i> Chances de Conter (Bônus Aleatório):
                     </h4>
-                    <ul class="space-y-2 bg-gray-900/40 p-3 rounded-xl border border-amber-950/30">
+                    <ul class="space-y-2 bg-black/30 p-3 rounded-xl border border-amber-950/20">
                         ${chancesHtml}
                     </ul>
                 </div>
@@ -383,17 +462,26 @@
                     <button onclick="closeDetails()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-xl text-sm transition-colors cursor-pointer">
                         Voltar
                     </button>
-                    <button onclick="addToCart('${product.name}', ${product.price}, '${id}'); closeDetails();" class="flex-1 bg-[#00f0ff] text-black font-bold py-3 rounded-xl text-sm hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2">
+                    <button onclick="addToCart('${product.name}', ${product.price}, '${id}'); closeDetails();" class="flex-1 bg-[#00f0ff] text-black font-bold py-3 rounded-xl text-sm hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg hover:shadow-[0_0_10px_#00f0ff]">
                         <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
                     </button>
                 </div>
             `;
 
             modal.classList.remove('hidden');
+            setTimeout(() => {
+                container.classList.remove('scale-95');
+                container.classList.add('scale-100');
+            }, 10);
         }
 
         function closeDetails() {
-            document.getElementById('details-modal').classList.add('hidden');
+            const container = document.getElementById('modal-container');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+            setTimeout(() => {
+                document.getElementById('details-modal').classList.add('hidden');
+            }, 200);
         }
 
         window.onclick = function(event) {
@@ -482,4 +570,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
