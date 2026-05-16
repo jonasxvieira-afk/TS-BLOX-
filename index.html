@@ -25,34 +25,16 @@
             position: relative;
         }
 
-        /* ----- SISTEMA DE PARTICULAS / FUNDO ANIMADO ----- */
-        .bg-particles {
+        /* ----- SISTEMA DE ESPAÇO E CANVAS DE PARTÍCULAS INTERATIVAS ----- */
+        #space-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #121c24 0%, #0b0c10 100%);
-            overflow: hidden;
-        }
-        .bg-particles::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #00f0ff;
-            border-radius: 50%;
-            box-shadow: 
-                20vw 10vh 4px #00f0ff, 80vw 20vh 6px #00f0ff, 40vw 50vh 3px #00f0ff,
-                15vw 80vh 5px #00f0ff, 70vw 70vh 4px #00f0ff, 90vw 40vh 5px #00f0ff,
-                30vw 30vh 6px #00f0ff, 60vw 85vh 3px #00f0ff, 50vw 15vh 5px #00f0ff;
-            opacity: 0.3;
-            animation: floatParticles 20s linear infinite;
-        }
-        @keyframes floatParticles {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-1000px) rotate(360deg); }
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #0d151c 0%, #06070a 100%);
         }
 
         /* ----- EFEITOS NEON E TEXTOS ----- */
@@ -133,7 +115,7 @@
 </head>
 <body>
 
-    <div class="bg-particles"></div>
+    <canvas id="space-canvas"></canvas>
 
     <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center px-4 py-16 text-center justify-center">
         
@@ -228,7 +210,7 @@
                         </div>
                         <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Deus Humano</span>
                         <h3 class="text-xl font-bold text-white mt-2 group-hover:text-[#00f0ff] transition-colors">Conta Godhuman + Kitsune</h3>
-                        <p class="text-sm text-gray-400 mt-2">Level Máximo Garantido, Fruta Kitsune ativa e Estilo de Luta Completo.</p>
+                        <p class="text-sm text-gray-400 mt-2">Level Máximo Garantido (2800), Fruta Kitsune ativa e Estilo de Luta Completo.</p>
                         <span class="text-xs text-[#00f0ff] block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye animate-pulse"></i> Clique para ver detalhes</span>
                     </div>
                     <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
@@ -490,6 +472,100 @@
 
 
     <script>
+        // ----- SCRIPT DO CANVAS DO ESPAÇO INTERATIVO -----
+        const canvas = document.getElementById('space-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let stars = [];
+        const mouse = { x: null, y: null };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        // Estrelas fixas de fundo piscantes
+        function initStars() {
+            stars = [];
+            const count = Math.floor((canvas.width * canvas.height) / 8000);
+            for(let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 1.5,
+                    alpha: Math.random(),
+                    speed: 0.01 + Math.random() * 0.02
+                });
+            }
+        }
+
+        // Classe de partículas do rastro do mouse
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                // Cores ciano (#00f0ff) e roxa (#a855f7) alternadas
+                this.color = Math.random() > 0.5 ? 'rgba(0, 240, 255, ' : 'rgba(168, 85, 247, ';
+                this.alpha = 1;
+                this.decay = 0.015 + Math.random() * 0.02;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            
+            // Cria partículas ao mover o mouse
+            for(let i = 0; i < 2; i++) {
+                particles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
+
+        function animateSpace() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Desenha estrelas piscantes
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+                ctx.fillRect(star.x, star.y, star.size, star.size);
+            });
+
+            // Atualiza e desenha partículas do rastro
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animateSpace);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        animateSpace();
+
+
+        // ----- LÓGICA DE NAVEGAÇÃO E LOJA -----
         function changePage(pageId) {
             document.getElementById('page-landing').classList.remove('active-page');
             document.getElementById('page-landing').classList.add('hidden-page');
@@ -580,7 +656,7 @@
                 guaranteed: [
                     "Level 2800 Máximo Garantido",
                     "Raça Shark V4 Despertada (Engrenagens Máximas)",
-                    "Escudo de Água Ativo que absorve até 30% de todo dano recebido",
+                    "Escudo de Água Ativo que absorbs até 30% de todo dano recebido",
                     "Imunidade completa e absoluta ao dano de água do mar",
                     "Conta limpa sem telefone vinculado"
                 ],
