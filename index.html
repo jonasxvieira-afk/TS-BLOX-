@@ -1,637 +1,484 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="h-full">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TS BLOX - Loja de Contas Blox Fruits</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
+    
+    <meta name="description" content="TS BLOX - A melhor loja de contas de Blox Fruits com entrega instantânea. Compre conta Godhuman, Kitsune, Soul Guitar e Level Max via Pix.">
+    <meta name="keywords" content="TS BLOX, ts blox, tsblox, blox fruits, comprar conta blox fruits, conta kitsune, godhuman, soul guitar, loja blox fruits">
+    <meta name="robots" content="index, follow">
+
+    <title>TS BLOX | Loja de Contas Instantânea</title>
+    
+    <link rel="icon" type="image/jpg" href="https://i.ibb.co/v6YgM2Xb/ts-blox-kitsune.jpg">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
         body {
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #0b0c10;
+            color: #c5c6c7;
             overflow-x: hidden;
+            position: relative;
         }
-        .title-font {
-            font-family: 'Orbitron', sans-serif;
+
+        /* ----- SISTEMA DE ESPAÇO E CANVAS DE PARTÍCULAS INTERATIVAS ----- */
+        #space-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #0d151c 0%, #06070a 100%);
+        }
+
+        /* ----- EFEITOS NEON E TEXTOS ----- */
+        .neon-text {
+            text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 30px #00f0ff;
+        }
+        .neon-text-purple {
+            text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7;
+        }
+        
+        /* ----- ENTRADAS SUAVES (FADE IN) ----- */
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ----- CARDS HOLOGRÁFICOS ----- */
+        .hologram-card {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hologram-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #00f0ff;
+            box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.3), 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+        .hologram-card.purple-theme:hover {
+            border-color: #a855f7;
+            box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.3), 0 0 15px rgba(168, 85, 247, 0.2);
+        }
+        .hologram-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(0, 240, 255, 0.05) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+            pointer-events: none;
+        }
+        .hologram-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* ----- BOTÃO SCI-FI PULSANTE ----- */
+        .btn-scifi {
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            animation: neonPulse 2s infinite alternate;
+        }
+        @keyframes neonPulse {
+            0% { box-shadow: 0 0 12px rgba(0, 240, 255, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(0, 240, 255, 0.8); }
+        }
+
+        /* ----- TROCA DE PÁGINA ----- */
+        .page {
+            transition: all 0.5s ease-in-out;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
         }
         .hidden-page {
-            display: none !important;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.96);
         }
         .active-page {
-            display: flex !important;
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0b0c10;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1f2833;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00f0ff;
-        }
-        /* Neon Glow Effects */
-        .glow-text-cyan {
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6), 0 0 20px rgba(0, 240, 255, 0.4);
-        }
-        .glow-text-purple {
-            text-shadow: 0 0 10px rgba(168, 85, 247, 0.6), 0 0 20px rgba(168, 85, 247, 0.4);
-        }
-        .glow-border-cyan:hover {
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            border-color: #00f0ff;
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+            position: relative;
         }
     </style>
 </head>
-<body class="text-gray-300 min-h-full flex flex-col relative selection:bg-[#00f0ff] selection:text-black">
+<body>
 
-    <!-- Canvas Interativo de Fundo Espacial -->
-    <canvas id="space-canvas" class="fixed inset-0 w-full h-full -z-10 pointer-events-none"></canvas>
+    <canvas id="space-canvas"></canvas>
 
-    <!-- BARRA DE NAVEGAÇÃO -->
-    <nav class="sticky top-0 bg-gray-950/80 backdrop-blur-md border-b border-gray-900 z-40 px-4 py-3 sm:px-8 flex justify-between items-center shadow-lg">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="changePage('page-landing')">
-            <span class="title-font text-2xl font-black text-white tracking-wider">TS<span class="text-[#00f0ff] glow-text-cyan">BLOX</span></span>
-        </div>
+    <div id="page-landing" class="page active-page min-h-screen flex flex-col items-center px-4 py-16 text-center justify-center">
         
-        <div class="flex items-center gap-4 sm:gap-6">
-            <button onclick="changePage('page-store')" class="text-sm font-bold uppercase tracking-wider text-gray-300 hover:text-[#00f0ff] transition-colors cursor-pointer flex items-center gap-1">
-                <i class="fa-solid fa-gamepad text-xs"></i> Loja
-            </button>
-            <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="text-sm font-bold uppercase tracking-wider text-gray-300 hover:text-purple-400 transition-colors flex items-center gap-1">
-                <i class="fa-brands fa-discord text-xs"></i> Discord
-            </a>
+        <div class="fade-in-up flex flex-col items-center">
+            <div class="animate-bounce mb-4 text-7xl text-[#00f0ff] filter drop-shadow-[0_0_15px_#00f0ff]">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <h1 class="text-6xl md:text-8xl font-extrabold text-white mb-3 tracking-wider">
+                TS <span class="text-[#00f0ff] neon-text">BLOX</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-xl mb-12">
+                A maior e mais rápida fornecedora de contas prontas para <span class="text-white font-bold">Blox Fruits</span>. Pagou via Pix, recebeu na hora!
+            </p>
+        </div>
+
+        <div class="fade-in-up grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl w-full mb-12 text-left" style="animation-delay: 0.2s;">
             
-            <!-- Botão do Carrinho -->
-            <button onclick="toggleCart()" class="relative p-2 text-white bg-gray-900 hover:bg-gray-800 border border-gray-800 rounded-lg transition-all cursor-pointer shadow-md active:scale-95">
-                <i class="fa-solid fa-shopping-bag text-lg text-[#00f0ff]"></i>
-                <span id="cart-count" class="absolute -top-1 -right-1 bg-purple-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-gray-950 shadow-md">0</span>
-            </button>
-        </div>
-    </nav>
+            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
+                <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-bolt-lightning animate-pulse"></i></div>
+                <h4 class="text-white font-bold text-base mb-1">Entrega Automática</h4>
+                <p class="text-xs text-gray-400">O sistema envia os dados de login instantaneamente após a confirmação do Pix.</p>
+            </div>
 
-    <!-- WRAPPER PRINCIPAL DE CONTEÚDO -->
-    <div class="flex-1 flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 z-10">
+            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
+                <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-shield-virus"></i></div>
+                <h4 class="text-white font-bold text-base mb-1">100% Seguro</h4>
+                <p class="text-xs text-gray-400">Contas criadas do zero, totalmente limpas, sem e-mail ou telefone vinculados.</p>
+            </div>
+
+            <div class="bg-[#1f2833]/40 p-5 rounded-xl border border-gray-800 backdrop-blur-md hover:border-[#00f0ff]/50 transition-colors">
+                <div class="text-[#00f0ff] text-2xl mb-2"><i class="fa-solid fa-headset"></i></div>
+                <h4 class="text-white font-bold text-base mb-1">Suporte no Discord</h4>
+                <p class="text-xs text-gray-400">Nossa equipe está pronta para tirar suas dúvidas e prestar suporte pós-venda.</p>
+            </div>
+
+        </div>
+
+        <div class="fade-in-up flex flex-wrap justify-center gap-8 md:gap-16 max-w-3xl w-full mb-12 border-y border-gray-800/40 py-6" style="animation-delay: 0.3s;">
+            <div>
+                <span class="block text-3xl font-extrabold text-[#00f0ff] neon-text">+1,500</span>
+                <span class="text-xs text-gray-400 uppercase tracking-wider">Contas Entregues</span>
+            </div>
+            <div>
+                <span class="block text-3xl font-extrabold text-[#00f0ff] neon-text">&lt; 3 min</span>
+                <span class="text-xs text-gray-400 uppercase tracking-wider">Tempo de Envio</span>
+            </div>
+            <div>
+                <span class="block text-3xl font-extrabold text-[#00f0ff] neon-text">100%</span>
+                <span class="text-xs text-gray-400 uppercase tracking-wider">Clientes Satisfeitos</span>
+            </div>
+        </div>
+
+        <button onclick="changePage('page-store')" class="btn-scifi bg-[#00f0ff] text-black font-bold text-xl px-10 py-5 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-3">
+            VER PRODUTOS DISPONÍVEIS <i class="fa-solid fa-arrow-right animate-ping" style="animation-duration: 2s;"></i>
+        </button>
+
+    </div>
+
+    <div id="page-store" class="page hidden-page min-h-screen flex flex-col">
         
-        <!-- ================= PÁGINA 1: LANDING PAGE ================= -->
-        <section id="page-landing" class="active-page flex-col gap-12 py-6 sm:py-12 animate-fade-in">
-            <!-- Hero Banner -->
-            <div class="relative bg-gradient-to-br from-gray-950 via-gray-900 to-purple-950/30 rounded-3xl p-6 sm:p-12 border border-gray-800 shadow-2xl flex flex-col md:flex-row items-center gap-8 overflow-hidden">
-                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-[#00f0ff]/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -left-20 -top-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
-                
-                <div class="flex-1 space-y-5 text-center md:text-left relative z-10">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-xs font-bold uppercase tracking-widest shadow-inner shadow-emerald-500/5">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sistema Online - Entrega Instantânea
+        <nav class="bg-[#1f2833]/80 backdrop-blur-lg border-b border-gray-800 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="changePage('page-landing')">
+                <span class="text-2xl font-extrabold text-white">TS <span class="text-[#00f0ff]">BLOX</span></span>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/De9Y3EVqR" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-4 py-2 rounded-md font-medium text-sm flex items-center gap-2 transition-transform hover:scale-105">
+                    <i class="fa-brands fa-discord"></i> Suporte
+                </a>
+                <button onclick="toggleCart()" class="relative p-2 text-white hover:text-[#00f0ff] transition-colors cursor-pointer">
+                    <i class="fa-solid fa-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-2 bg-[#00f0ff] text-black font-bold text-xs w-5 h-5 rounded-full flex items-center justify-center animate-pulse">0</span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="bg-blue-950/30 backdrop-blur-sm border-b border-blue-900/50 text-blue-400 text-center py-2 text-sm flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-halved animate-pulse"></i> Compra 100% Segura. A conta será enviada para o seu e-mail após o pagamento.
+        </div>
+
+        <main class="flex-1 max-w-7xl w-full mx-auto p-6 my-4">
+            
+            <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-2 flex items-center gap-2">
+                <i class="fa-solid fa-fire text-amber-500"></i> Principais Ofertas
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+                <div onclick="openDetails('p1')" class="hologram-card bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden bg-black/20">
+                            <img src="https://i.ibb.co/v6YgM2Xb/ts-blox-kitsune.jpg" class="h-full w-full object-cover rounded-lg transition-transform duration-500 group-hover:scale-105" alt="Conta Godhuman + Kitsune">
+                        </div>
+                        <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Deus Humano</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-[#00f0ff] transition-colors">Conta Godhuman + Kitsune</h3>
+                        <p class="text-sm text-gray-400 mt-2">Level Máximo Garantido (2800), Fruta Kitsune ativa e Estilo de Luta Completo.</p>
+                        <span class="text-xs text-[#00f0ff] block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye animate-pulse"></i> Clique para ver detalhes</span>
                     </div>
-                    <h1 class="title-font text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
-                        AS MELHORES CONTAS DE <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-purple-500">BLOX FRUITS</span> ESTÃO AQUI.
-                    </h1>
-                    <p class="text-gray-400 text-base sm:text-lg max-w-xl font-medium">
-                        Adquira contas Level Maximo (2800) 100% upadas, seguras e prontas para o PvP com entrega automatizada via e-mail ou Pix.
-                    </p>
-                    <div class="pt-2 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                        <button onclick="changePage('page-store')" class="bg-gradient-to-r from-[#00f0ff] to-cyan-600 text-black font-black px-8 py-4 rounded-xl shadow-lg shadow-cyan-500/20 hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer tracking-wider uppercase text-sm">
-                            <i class="fa-solid fa-shopping-cart mr-2"></i> Ver Catálogo de Contas
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-[#00f0ff]">R$ 49,90</span>
+                        <button onclick="addToCart('Conta Godhuman + Kitsune', 49.90, 'p1')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#00f0ff]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
                         </button>
-                        <a href="#faq" class="bg-gray-900 hover:bg-gray-800 text-white font-bold px-8 py-4 rounded-xl border border-gray-800 hover:border-gray-700 transition-all text-center text-sm flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-circle-question text-gray-500"></i> Como funciona?
-                        </a>
                     </div>
                 </div>
+
+                <div onclick="openDetails('p2')" class="hologram-card bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="bg-black/20 h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/C5fP0vFp/soul-guitar.png" class="h-40 w-auto object-contain transition-transform duration-500 group-hover:scale-110" alt="Soul Guitar">
+                        </div>
+                        <span class="bg-purple-500/20 text-purple-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Mítica</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-[#00f0ff] transition-colors">Conta Soul Guitar + Dough V2</h3>
+                        <p class="text-sm text-gray-400 mt-2">Soul Guitar lendária equipada e fruta Massa despertada no máximo.</p>
+                        <span class="text-xs text-[#00f0ff] block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye animate-pulse"></i> Clique para ver detalhes</span>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-[#00f0ff]">R$ 39,90</span>
+                        <button onclick="addToCart('Conta Soul Guitar + Dough V2', 39.90, 'p2')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#00f0ff]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <div onclick="openDetails('p3')" class="hologram-card bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="bg-black/20 h-56 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                            <img src="https://i.ibb.co/v4g0997Y/level-max.png" class="h-40 w-auto object-contain transition-transform duration-500 group-hover:scale-110" alt="Conta Level Max">
+                        </div>
+                        <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Iniciante</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-[#00f0ff] transition-colors">Conta Inicial Level Max</h3>
+                        <p class="text-sm text-gray-400 mt-2">Conta limpa lvl 2800 pronta para você customizar e iniciar jornada.</p>
+                        <span class="text-xs text-[#00f0ff] block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye animate-pulse"></i> Clique para ver detalhes</span>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-[#00f0ff]">R$ 19,90</span>
+                        <button onclick="addToCart('Conta Inicial Level Max', 19.90, 'p3')" class="bg-[#00f0ff] text-black px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#00f0ff]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mt-12 mb-6 border-b border-gray-800 pb-2 flex items-center justify-between">
+                <h2 class="text-3xl font-extrabold text-white tracking-wide">
+                    <i class="fa-solid fa-dna text-purple-500"></i> RAÇAS <span class="text-purple-500 neon-text-purple">V4</span>
+                </h2>
+                <span class="bg-purple-950/60 border border-purple-800 text-purple-300 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-widest animate-pulse">Full Tier / Despertada</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 
-                <div class="w-full md:w-2/5 flex justify-center relative">
-                    <div class="absolute inset-0 bg-gradient-to-t from-gray-950 to-transparent z-10 md:hidden"></div>
-                    <img src="https://i.ibb.co/v6XfHnZ/kitsune-render.png" alt="Kitsune Blox Fruits" class="w-64 sm:w-80 md:w-full drop-shadow-[0_0_35px_rgba(168,85,247,0.4)] animate-bounce-slow">
+                <div onclick="openDetails('v4_mink')" class="hologram-card purple-theme bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="bg-black/30 h-44 rounded-lg mb-4 flex items-center justify-center overflow-hidden text-5xl text-purple-400">
+                            <i class="fa-solid fa-rabbit group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Mink (Coelho)</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-purple-400 transition-colors">Conta Mink V4 Full</h3>
+                        <p class="text-sm text-gray-400 mt-2">Level Max, Raça Mink V4 100% Despertada com velocidade extrema e tornados ativos.</p>
+                        <span class="text-xs text-purple-400 block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye"></i> Detalhes da Raça</span>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-purple-400">R$ 59,90</span>
+                        <button onclick="addToCart('Conta Mink V4 Full', 59.90, 'v4_mink')" class="bg-purple-600 text-white px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#a855f7]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
                 </div>
+
+                <div onclick="openDetails('v4_human')" class="hologram-card purple-theme bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="bg-black/30 h-44 rounded-lg mb-4 flex items-center justify-center overflow-hidden text-5xl text-purple-400">
+                            <i class="fa-solid fa-user-ninja group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Humano</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-purple-400 transition-colors">Conta Human V4 Full</h3>
+                        <p class="text-sm text-gray-400 mt-2">Level Max, Raça Humana V4 com medidor de fúria no máximo e dano devastador aumentado.</p>
+                        <span class="text-xs text-purple-400 block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye"></i> Detalhes da Raça</span>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-purple-400">R$ 59,90</span>
+                        <button onclick="addToCart('Conta Human V4 Full', 59.90, 'v4_human')" class="bg-purple-600 text-white px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#a855f7]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <div onclick="openDetails('v4_angel')" class="hologram-card purple-theme bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="bg-black/30 h-44 rounded-lg mb-4 flex items-center justify-center overflow-hidden text-5xl text-purple-400">
+                            <i class="fa-solid fa-feather-pointed group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Anjo / Sky</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-purple-400 transition-colors">Conta Angel V4 Full</h3>
+                        <p class="text-sm text-gray-400 mt-2">Level Max, Raça Anjo V4 Despertada com voo infinito e aura Real que paralisa inimigos.</p>
+                        <span class="text-xs text-purple-400 block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye"></i> Detalhes da Raça</span>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-purple-400">R$ 59,90</span>
+                        <button onclick="addToCart('Conta Angel V4 Full', 59.90, 'v4_angel')" class="bg-purple-600 text-white px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#a855f7]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <div onclick="openDetails('v4_shark')" class="hologram-card purple-theme bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="bg-black/30 h-44 rounded-lg mb-4 flex items-center justify-center overflow-hidden text-5xl text-purple-400">
+                            <i class="fa-solid fa-fish group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Shark / Fishman</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-purple-400 transition-colors">Conta Shark V4 Full</h3>
+                        <p class="text-sm text-gray-400 mt-2">Level Max, Raça Tubarão V4 com escudo de água infinito e imunidade completa a água.</p>
+                        <span class="text-xs text-purple-400 block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye"></i> Detalhes da Raça</span>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-purple-400">R$ 59,90</span>
+                        <button onclick="addToCart('Conta Shark V4 Full', 59.90, 'v4_shark')" class="bg-purple-600 text-white px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#a855f7]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <div onclick="openDetails('v4_cyborg')" class="hologram-card purple-theme bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="bg-black/30 h-44 rounded-lg mb-4 flex items-center justify-center overflow-hidden text-5xl text-purple-400">
+                            <i class="fa-solid fa-robot group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Cyborg</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-purple-400 transition-colors">Conta Cyborg V4 Full</h3>
+                        <p class="text-sm text-gray-400 mt-2">Level Max, Raça Ciborgue V4 liberada com raios encadeados pasivos e quebra de instinto.</p>
+                        <span class="text-xs text-purple-400 block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye"></i> Detalhes da Raça</span>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-purple-400">R$ 64,90</span>
+                        <button onclick="addToCart('Conta Cyborg V4 Full', 64.90, 'v4_cyborg')" class="bg-purple-600 text-white px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#a855f7]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <div onclick="openDetails('v4_ghoul')" class="hologram-card purple-theme bg-[#1f2833]/70 backdrop-blur-md rounded-xl overflow-hidden border border-gray-800 flex flex-col justify-between cursor-pointer group">
+                    <div class="p-6">
+                        <div class="bg-black/30 h-44 rounded-lg mb-4 flex items-center justify-center overflow-hidden text-5xl text-purple-400">
+                            <i class="fa-solid fa-ghost group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded font-bold uppercase tracking-wider">Ghoul (Demônio)</span>
+                        <h3 class="text-xl font-bold text-white mt-2 group-hover:text-purple-400 transition-colors">Conta Ghoul V4 Full</h3>
+                        <p class="text-sm text-gray-400 mt-2">Level Max, Raça Ghoul V4 com roubo de vida extremo, escuridão cegante e recarga rápida.</p>
+                        <span class="text-xs text-purple-400 block mt-3 font-semibold opacity-60 group-hover:opacity-100 transition-opacity"><i class="fa-solid fa-eye"></i> Detalhes da Raça</span>
+                    </div>
+                    <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between" onclick="event.stopPropagation();">
+                        <span class="text-2xl font-bold text-purple-400">R$ 64,90</span>
+                        <button onclick="addToCart('Conta Ghoul V4 Full', 64.90, 'v4_ghoul')" class="bg-purple-600 text-white px-4 py-2 rounded font-bold text-sm hover:scale-110 active:scale-95 transition-transform cursor-pointer shadow-lg hover:shadow-[0_0_10px_#a855f7]">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+
             </div>
+        </main>
 
-            <!-- Vantagens da Loja -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-gray-950/60 backdrop-blur-sm p-6 rounded-2xl border border-gray-900 flex gap-4 items-start shadow-xl">
-                    <div class="p-3 bg-cyan-500/10 rounded-xl text-[#00f0ff] text-xl border border-cyan-500/20"><i class="fa-solid fa-bolt"></i></div>
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-1">Entrega Automática</h3>
-                        <p class="text-sm text-gray-400 font-medium">Comprou, chegou! O envio dos dados de login é processado instantaneamente em minutos no seu e-mail.</p>
+        <section class="max-w-7xl w-full mx-auto p-6 mt-4">
+            <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-2">
+                <i class="fa-solid fa-star text-yellow-500"></i> Avaliações de Clientes
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-[#1f2833]/50 backdrop-blur-sm p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff]/40 transition-all">
+                    <div class="flex text-yellow-500 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
+                    <p class="text-sm text-gray-400 italic">"Comprei a Godhuman e chegou no meu email em menos de 1 minuto! Muito confiável, o site é brabo."</p>
+                    <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@Pedrinho_Blox</span>
                 </div>
-                <div class="bg-gray-950/60 backdrop-blur-sm p-6 rounded-2xl border border-gray-900 flex gap-4 items-start shadow-xl">
-                    <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400 text-xl border border-purple-500/20"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-1">100% Seguro e Sem Vínculos</h3>
-                        <p class="text-sm text-gray-400 font-medium">Contas criadas do zero sem e-mail ou telefone cadastrados. Você altera tudo e se torna o único dono.</p>
+                <div class="bg-[#1f2833]/50 backdrop-blur-sm p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff]/40 transition-all">
+                    <div class="flex text-yellow-500 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
+                    <p class="text-sm text-gray-400 italic">"Gostei demais do atendimento. Tive uma dúvida na hora de entrar na conta e o suporte do Discord respondeu rápido."</p>
+                    <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@ZoroGameplays</span>
                 </div>
-                <div class="bg-gray-950/60 backdrop-blur-sm p-6 rounded-2xl border border-gray-900 flex gap-4 items-start shadow-xl sm:col-span-2 lg:col-span-1">
-                    <div class="p-3 bg-amber-500/10 rounded-xl text-amber-400 text-xl border border-amber-500/20"><i class="fa-solid fa-headset"></i></div>
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-1">Suporte Integrado 24h</h3>
-                        <p class="text-sm text-gray-400 font-medium">Nossa equipe está sempre de prontidão em nosso servidor do Discord para tirar dúvidas e ajudar.</p>
+                <div class="bg-[#1f2833]/50 backdrop-blur-sm p-5 rounded-xl border border-gray-800 hover:border-[#00f0ff]/40 transition-all">
+                    <div class="flex text-yellow-500 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= PÁGINA 2: LOJA / CATÁLOGO ================= -->
-        <section id="page-store" class="hidden-page flex-col gap-10 py-6 animate-fade-in">
-            <div class="text-center md:text-left space-y-2 border-b border-gray-900 pb-6 flex flex-col md:flex-row md:justify-between md:items-end gap-4">
-                <div>
-                    <h2 class="title-font text-3xl font-black text-white uppercase tracking-wider"><i class="fa-solid fa-store text-[#00f0ff]"></i> Nosso Catálogo</h2>
-                    <p class="text-gray-400 font-medium">Selecione e monte o seu carrinho com as melhores contas do mercado.</p>
-                </div>
-                <div class="flex justify-center gap-2 bg-gray-950/80 p-1.5 rounded-xl border border-gray-900 self-center md:self-auto">
-                    <a href="#ofertas-principais" class="px-4 py-2 bg-gray-900 text-xs font-bold text-white rounded-lg border border-gray-800 uppercase tracking-wider">Ofertas</a>
-                    <a href="#racas-v4" class="px-4 py-2 hover:bg-gray-900 text-xs font-bold text-gray-400 hover:text-white rounded-lg uppercase tracking-wider transition-colors">Raças V4</a>
-                </div>
-            </div>
-
-            <!-- SUBSEÇÃO: OFERTAS PRINCIPAIS -->
-            <div id="ofertas-principais" class="space-y-6 scroll-mt-24">
-                <div class="flex items-center gap-3">
-                    <span class="w-1 h-6 bg-[#00f0ff] rounded-full shadow-[0_0_8px_#00f0ff]"></span>
-                    <h3 class="title-font text-xl font-bold tracking-wider text-white uppercase">🔥 Ofertas Principais (Level Max 2800)</h3>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- PRODUTO 1 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <span class="absolute top-2 left-2 bg-purple-600 text-white text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded shadow-md z-10"><i class="fa-solid fa-star"></i> MAIS VENDIDO</span>
-                                <img src="https://i.ibb.co/v6XfHnZ/kitsune-render.png" alt="Godhuman Kitsune" class="w-32 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Godhuman + Kitsune</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Level Maximo 2800 garantido com estilo Godhuman e a mítica fruta Kitsune ativa ou no inventário.</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 49,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('p1')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Godhuman + Kitsune', 49.90, 'p1')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PRODUTO 2 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <img src="https://i.ibb.co/fdbf7Ym/dough-render.png" alt="Soul Guitar Dough" class="w-32 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Soul Guitar + Dough V2</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Level Maximo 2800 com a arma mítica Soul Guitar equipada e Fruta Dough totalmente despertada (V2).</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 39,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('p2')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Soul Guitar + Dough V2', 39.90, 'p2')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PRODUTO 3 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <span class="absolute top-2 left-2 bg-cyan-600 text-white text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded shadow-md z-10"><i class="fa-solid fa-tag"></i> MELHOR PREÇO</span>
-                                <img src="https://i.ibb.co/C060Vb8/buddha-render.png" alt="Conta Inicial Max" class="w-24 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Inicial Level Max</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Conta simples limpa no Level Maximo 2800 perfeita para você mesmo iniciar a sua jornada e customizar.</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 19,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('p3')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Inicial Level Max', 19.90, 'p3')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- SUBSEÇÃO: RAÇAS V4 -->
-            <div id="racas-v4" class="space-y-6 pt-6 scroll-mt-24">
-                <div class="flex items-center gap-3">
-                    <span class="w-1 h-6 bg-purple-500 rounded-full shadow-[0_0_8px_#a855f7]"></span>
-                    <h3 class="title-font text-xl font-bold tracking-wider text-white uppercase">⚡ Contas Raça V4 Despertada (Full Tier)</h3>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- MINK V4 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <img src="https://i.ibb.co/fzx0r3hN/image.png" alt="Mink V4" class="w-20 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Mink V4 Full Tier</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Level Maximo 2800. Raça Mink Despertada no máximo (Engrenagens completas), velocidade extrema passiva e tornados na esquiva.</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 59,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('v4_mink')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Mink V4 Full Tier', 59.90, 'v4_mink')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- HUMAN V4 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <img src="https://i.ibb.co/6JwHSt1x/image.png" alt="Human V4" class="w-20 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Human V4 Full Tier</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Level Maximo 2800. Raça Humana Despertada com medidor de ira completo e multiplicador de dano bruto avassalador.</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 59,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('v4_human')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Human V4 Full Tier', 59.90, 'v4_human')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ANGEL V4 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <img src="https://i.ibb.co/X1PxyXs/image.png" alt="Angel V4" class="w-20 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Angel V4 Full Tier</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Level Maximo 2800. Raça Anjo Despertada com habilidade de voo livre e a poderosa Aura Real que cancela ataques inimigos.</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 59,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('v4_angel')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Angel V4 Full Tier', 59.90, 'v4_angel')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- SHARK V4 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <img src="https://i.ibb.co/466bSvL/image.png" alt="Shark V4" class="w-20 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Shark V4 Full Tier</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Level Maximo 2800. Raça Shark com escudo de água ativado contra 30% de dano e imunidade absoluta a dano do mar.</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 59,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('v4_shark')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Shark V4 Full Tier', 59.90, 'v4_shark')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CYBORG V4 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <img src="https://i.ibb.co/M53xN04h/image.png" alt="Cyborg V4" class="w-20 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Cyborg V4 Full Tier</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Level Maximo 2800. Raça Cyborg com descarga elétrica em cadeia passiva e quebra imediata de Haki da observação inimigo.</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 64,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('v4_cyborg')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Cyborg V4 Full Tier', 64.90, 'v4_cyborg')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- GHOUL V4 -->
-                    <div class="bg-gray-950/50 backdrop-blur-sm rounded-2xl border border-gray-900 p-5 flex flex-col justify-between transition-all duration-300 glow-contract glow-border-cyan group shadow-xl">
-                        <div class="space-y-4">
-                            <div class="overflow-hidden rounded-xl bg-gray-900 border border-gray-800 aspect-video flex items-center justify-center relative">
-                                <img src="https://i.ibb.co/ns6HLMRT/image.png" alt="Ghoul V4" class="w-20 group-hover:scale-110 transition-transform duration-500 drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                            </div>
-                            <div>
-                                <h4 class="text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors">Conta Ghoul V4 Full Tier</h4>
-                                <p class="text-xs text-gray-400 mt-1 line-clamp-2">Level Maximo 2800. Raça Ghoul com roubo de vida (Life Leech) massivo ativado e névoa da escuridão cegante à noite.</p>
-                            </div>
-                        </div>
-                        <div class="pt-5 mt-5 border-t border-gray-900 flex justify-between items-center">
-                            <div>
-                                <span class="text-[10px] text-gray-500 block uppercase font-bold tracking-wider">A partir de</span>
-                                <span class="text-2xl font-black text-[#00f0ff] tracking-tight">R$ 64,90</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="openDetails('v4_ghoul')" class="p-3 bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white border border-gray-800 rounded-xl transition-colors cursor-pointer text-sm" title="Ver Detalhes">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <button onclick="addToCart('Conta Ghoul V4 Full Tier', 64.90, 'v4_ghoul')" class="bg-[#00f0ff] text-black font-black px-4 py-2 rounded-xl text-xs uppercase tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-md shadow-cyan-500/10">
-                                    <i class="fa-solid fa-cart-plus mr-1"></i> Comprar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="text-sm text-gray-400 italic">"Peguei a Shark V4 e veio com todas as engrenagens completas certinho! Recomendo demais a TS BLOX."</p>
+                    <span class="block mt-4 text-xs font-bold text-[#00f0ff]">@Katakuri_V2</span>
                 </div>
             </div>
         </section>
 
-        <!-- SEÇÃO: FAQ -->
-        <section id="faq" class="py-12 border-t border-gray-900 mt-12 space-y-6">
-            <div class="text-center md:text-left">
-                <h3 class="title-font text-2xl font-black text-white uppercase tracking-wider">❓ Perguntas Frequentes</h3>
-                <p class="text-gray-400 font-medium">Tudo o que você precisa saber antes e depois de realizar sua compra.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gray-950/40 p-5 rounded-xl border border-gray-900">
-                    <h4 class="text-white font-bold mb-2">Qual o prazo de envio dos dados?</h4>
-                    <p class="text-sm text-gray-400 font-medium">O envio é feito imediatamente em formato de texto para cópia na tela após a aprovação do Pix no checkout do nosso gateway ou painel.</p>
+        <section class="max-w-7xl w-full mx-auto p-6 mb-12">
+            <h2 class="text-2xl font-bold text-white mb-6 border-b border-gray-800 pb-2">
+                <i class="fa-solid fa-circle-question text-[#00f0ff]"></i> Dúvidas Frequentes
+            </h2>
+            <div class="space-y-4">
+                <div class="bg-gray-900/60 backdrop-blur-sm p-5 rounded-xl border border-gray-800">
+                    <h4 class="text-white font-bold mb-2">1. A entrega é automática? Como eu recebo?</h4>
+                    <p class="text-sm text-gray-400">Sim! Assim que o seu Pix for aprovado, o login e a senha da conta serão exibidos na sua tela e também enviados automaticamente para o E-mail que você cadastrar no carrinho.</p>
                 </div>
-                <div class="bg-gray-950/40 p-5 rounded-xl border border-gray-900">
-                    <h4 class="text-white font-bold mb-2">Posso alterar a senha e o e-mail?</h4>
-                    <p class="text-sm text-gray-400 font-medium">Com certeza. As contas são totalmente limpas de dados. Assim que logar, você é obrigado a vincular seus próprios métodos de segurança.</p>
+                <div class="bg-gray-900/60 backdrop-blur-sm p-5 rounded-xl border border-gray-800">
+                    <h4 class="text-white font-bold mb-2">2. Quanto tempo leva para minha conta chegar?</h4>
+                    <p class="text-sm text-gray-400">Como o pagamento é via Pix, a confirmação do banco é instantânea. A entrega costuma levar de 1 a 3 minutos após o pagamento.</p>
+                </div>
+                <div class="bg-gray-900/60 backdrop-blur-sm p-5 rounded-xl border border-gray-800">
+                    <h4 class="text-white font-bold mb-2">3. As contas são seguras? Posso trocar a senha?</h4>
+                    <p class="text-sm text-gray-400">Totalmente seguras. As nossas contas são criadas do zero, não possuem nenhum e-mail ou telefone vinculados (são 100% limpas). Assim que você fizer o login pela primeira vez, você mesmo poderá vincular o seu e-mail pessoal e alterar a senha.</p>
                 </div>
             </div>
         </section>
+
+        <footer class="bg-gray-950/80 backdrop-blur-md p-6 text-center text-sm text-gray-600 border-t border-gray-900 mt-auto">
+            &copy; 2026 TS BLOX. Todos os direitos reservados. Entrega automática e suporte 24h.
+        </footer>
     </div>
 
-    <!-- SEÇÃO LATERAL: MENU DO CARRINHO (SIDEBAR) -->
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-gray-950 border-l border-gray-900 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col justify-between">
-        <div class="p-6 border-b border-gray-900 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-shopping-cart text-[#00f0ff]"></i>
-                <h3 class="title-font text-lg font-bold text-white uppercase tracking-wider">Seu Carrinho</h3>
-            </div>
-            <button onclick="toggleCart()" class="text-gray-500 hover:text-white p-2 text-xl cursor-pointer transition-colors"><i class="fa-solid fa-xmark"></i></button>
+    <div id="details-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 hidden backdrop-blur-md transition-all">
+        <div class="bg-[#1f2833] max-w-lg w-full rounded-2xl border border-gray-700 p-6 shadow-2xl relative flex flex-col max-h-[90vh] scale-95 transition-transform duration-300" id="modal-container">
+            <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl cursor-pointer transition-colors">&times;</button>
+            <div id="modal-content" class="overflow-y-auto pr-2 space-y-4"></div>
         </div>
+    </div>
 
-        <!-- Lista de Itens Adicionados -->
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
-            <!-- Gerado via Javascript dinamicamente -->
-            <div class="text-center text-gray-500 my-10 font-medium py-8">Seu carrinho está vazio. Adicione contas do catálogo!</div>
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-[#1f2833] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-gray-800 flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-white"><i class="fa-solid fa-shopping-cart text-[#00f0ff]"></i> Seu Carrinho</h2>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl cursor-pointer">&times;</button>
         </div>
-
-        <!-- Totalizadores e Checkout -->
-        <div class="p-6 border-t border-gray-900 bg-gray-950/50 space-y-4">
-            <div class="flex justify-between items-center font-bold">
-                <span class="text-gray-400">VALOR TOTAL:</span>
-                <span id="cart-total" class="text-2xl text-[#00f0ff] title-font font-black tracking-tight">R$ 0,00</span>
+        
+        <div id="cart-items" class="flex-1 p-6 overflow-y-auto space-y-4">
+            <p class="text-gray-500 text-center py-8">Seu carrinho está vazio.</p>
+        </div>
+        
+        <div class="p-6 border-t border-gray-800 bg-gray-900/50">
+            <div class="mb-4">
+                <label for="checkout-email" class="block text-xs font-bold text-gray-400 mb-1">
+                    <i class="fa-solid fa-envelope"></i> E-mail para receber a conta:
+                </label>
+                <input type="email" id="checkout-email" placeholder="seuemail@gmail.com" class="w-full bg-gray-800 border border-gray-700 text-white rounded p-3 text-sm focus:outline-none focus:border-[#00f0ff] transition-colors shadow-inner" required>
             </div>
-            <button onclick="checkoutCart()" class="w-full bg-gradient-to-r from-[#00f0ff] to-cyan-600 text-black font-black py-4 rounded-xl shadow-lg shadow-cyan-500/10 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-wider text-xs cursor-pointer">
-                <i class="fa-solid fa-wallet mr-1"></i> Ir para o Pagamento (Pix)
+
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-400">Total:</span>
+                <span id="cart-total" class="text-2xl font-bold text-[#00f0ff]">R$ 0,00</span>
+            </div>
+            <button onclick="processCheckout()" class="w-full bg-[#00f0ff] text-black font-bold py-3 rounded-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg hover:shadow-[0_0_15px_#00f0ff]">
+                <i class="fa-solid fa-bolt"></i> FINALIZAR COMPRA
             </button>
         </div>
     </div>
+    
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/60 z-40 hidden"></div>
 
-    <!-- PAINEL MODAL: DETALHES COMPLETOS DO PRODUTO -->
-    <div id="details-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-gray-950 border border-gray-900 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-scale-up">
-            <div class="p-6 border-b border-gray-900 flex justify-between items-center bg-gray-900/30">
-                <h3 id="modal-title" class="title-font font-bold text-white text-lg uppercase tracking-wider">Detalhes da Conta</h3>
-                <button onclick="closeDetails()" class="text-gray-500 hover:text-white p-2 text-lg cursor-pointer transition-colors"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div id="modal-body" class="p-6 space-y-4 text-sm font-medium leading-relaxed text-gray-300">
-                <!-- Inserido dinamicamente via JS -->
-            </div>
-            <div class="p-6 border-t border-gray-900 bg-gray-900/10 flex justify-end">
-                <button onclick="closeDetails()" class="bg-gray-900 hover:bg-gray-800 text-white font-bold px-5 py-2.5 rounded-xl border border-gray-800 transition-all text-xs uppercase cursor-pointer">Fechar Janela</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- RODAPÉ DA PÁGINA (FOOTER) -->
-    <footer class="bg-gray-950 border-t border-gray-900 py-6 text-center text-xs font-semibold text-gray-600 tracking-wider uppercase mt-auto">
-        &copy; 2026 TS BLOX - Todos os direitos reservados. Desenvolvimento Premium.
-    </footer>
-
-    <!-- LÓGICA DO JAVASCRIPT INTEGRADA -->
     <script>
-        // Estrutura do Banco de Dados Local dos Produtos
-        const productsInfo = {
-            p1: {
-                title: "Conta Godhuman + Kitsune",
-                desc: "Esta conta garante o Level Maximo (2800) completo. Possui o estilo de luta definitivo Godhuman liberado com maestria, além da fruta mítica Kitsune ativada (com todos os ataques abertos para PvP) ou armazenada no baú para uso. Acompanha itens aleatórios adicionais do Terceiro Mar."
-            },
-            p2: {
-                title: "Conta Soul Guitar + Dough V2",
-                desc: "Perfeita para quem busca combos focados em PvP competitivo. Possui Level Maximo (2800), a guitarra mítica Soul Guitar totalmente desbloqueada e a Fruta Dough (Massa) Despertada com todos os tiers habilitados através de raids (Dough V2)."
-            },
-            p3: {
-                title: "Conta Inicial Level Max",
-                desc: "A melhor opção custo-benefício do mercado. Trata-se de uma conta limpa contendo apenas o Level Maximo (2800) garantido e fragmentos/dinheiro obtidos durante o up de forma limpa. Não possui e-mail de recuperação vinculado para sua total segurança."
-            },
-            v4_mink: {
-                title: "Conta Mink V4 Full Tier",
-                desc: "Conta focada em mobilidade extrema. Level Maximo (2800) com o Despertar da Raça Mink V4 concluído (Engrenagens Máximas liberadas). Ativa habilidades passivas de velocidade incomparável no mapa e cria tornados de raios paralizantes ao desferir esquivas (Flash Step)."
-            },
-            v4_human: {
-                title: "Conta Human V4 Full Tier",
-                desc: "Conta montada para causar o maior multiplicador de dano do jogo. Level Maximo (2800) com Raça Humana V4 no último tier. Desbloqueia a barra de 'Psycho' Ira que amplifica proporcionalmente seu dano bruto conforme você entra em combate."
-            },
-            v4_angel: {
-                title: "Conta Angel V4 Full Tier",
-                desc: "A soberana dos céus para controle de arena. Conta Level Maximo (2800) com Raça Anjo V4 Full Tier. Concede o poder de voo prolongado contínuo e a habilidade passiva Aura Real, que desacelera, drena energia e cancela movimentos de inimigos próximos."
-            },
-            v4_shark: {
-                title: "Conta Shark V4 Full Tier",
-                desc: "A conta tanque imbatível. Level Maximo (2800) e Raça Tubarão V4 totalmente maximizada. Cria uma armadura/escudo de água constante que absorve grandes quantidades de impacto e zera completamente qualquer dano recebido pela água do mar."
-            },
-            v4_cyborg: {
-                title: "Conta Cyborg V4 Full Tier",
-                desc: "Excelente para quebrar defesas e realizar combos em área. Level Maximo (2800) com Raça Cyborg V4 no nível máximo. Libera descargas elétricas passivas ao redor do personagem que causam dano contínuo e desativam instantaneamente a observação Haki do oponente."
-            },
-            v4_ghoul: {
-                title: "Conta Ghoul V4 Full Tier",
-                desc: "Estilo vampírico ideal para sobrevivência de longa duração no PvP. Level Maximo (2800) com Raça Ghoul V4 Full Tier. Aplica um efeito massivo de roubo de vida (Life Leech) em cada habilidade física conectada e gera uma névoa sombria que cega adversários durante a noite."
-            }
-        };
-
-        let cart = [];
-
-        // Sistema Simples de Roteamento de Páginas
-        function changePage(pageId) {
-            document.getElementById('page-landing').classList.add('hidden-page');
-            document.getElementById('page-store').classList.add('hidden-page');
-            document.getElementById('page-landing').classList.remove('active-page');
-            document.getElementById('page-store').classList.remove('active-page');
-            
-            const target = document.getElementById(pageId);
-            target.classList.remove('hidden-page');
-            target.classList.add('active-page');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Janela Modal de Detalhes
-        function openDetails(key) {
-            const data = productsInfo[key];
-            if(!data) return;
-            document.getElementById('modal-title').innerText = data.title;
-            document.getElementById('modal-body').innerHTML = `<p>${data.desc}</p><div class="p-3 bg-cyan-950/20 rounded-xl border border-cyan-900/30 text-xs text-cyan-400 font-bold flex gap-2 items-center mt-2"><i class="fa-solid fa-circle-info"></i> Lembre-se: Todas as nossas contas acompanham garantia de troca e suporte vitalício via Discord.</div>`;
-            document.getElementById('details-modal').classList.remove('hidden');
-        }
-        function closeDetails() {
-            document.getElementById('details-modal').classList.add('hidden');
-        }
-
-        // Mecânica e Funções do Carrinho de Compras
-        function toggleCart() {
-            const sidebar = document.getElementById('cart-sidebar');
-            if(sidebar.classList.contains('translate-x-full')) {
-                sidebar.classList.remove('translate-x-full');
-            } else {
-                sidebar.classList.add('translate-x-full');
-            }
-        }
-
-        function addToCart(name, price, id) {
-            cart.push({ name, price, id });
-            updateCartUI();
-            
-            // Notificação visual simples no botão do carrinho
-            const badge = document.getElementById('cart-count');
-            badge.classList.add('scale-125', 'bg-cyan-500');
-            setTimeout(() => badge.classList.remove('scale-125', 'bg-cyan-500'), 300);
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            document.getElementById('cart-count').innerText = cart.length;
-            const container = document.getElementById('cart-items');
-            
-            if(cart.length === 0) {
-                container.innerHTML = `<div class="text-center text-gray-500 my-10 font-medium py-8">Seu carrinho está vazio. Adicione contas do catálogo!</div>`;
-                document.getElementById('cart-total').innerText = "R$ 0,00";
-                return;
-            }
-            
-            let html = "";
-            let total = 0;
-            cart.forEach((item, index) => {
-                total += item.price;
-                html += `
-                <div class="bg-gray-900/50 border border-gray-900 p-4 rounded-xl flex justify-between items-center gap-3">
-                    <div>
-                        <h5 class="text-sm font-bold text-white line-clamp-1">${item.name}</h5>
-                        <span class="text-xs text-[#00f0ff] font-bold">R$ ${item.price.toFixed(2).replace('.',',')}</span>
-                    </div>
-                    <button onclick="removeFromCart(${index})" class="text-gray-500 hover:text-red-400 p-2 text-sm cursor-pointer transition-colors" title="Remover"><i class="fa-solid fa-trash-can"></i></button>
-                </div>`;
-            });
-            container.innerHTML = html;
-            document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
-        }
-
-        function checkoutCart() {
-            if(cart.length === 0) {
-                alert("Seu carrinho está vazio!");
-                return;
-            }
-            
-            let mensagem = "Olá! Gostaria de comprar as seguintes contas da loja:\n\n";
-            cart.forEach((item, i) => {
-                mensagem += `${i+1}. ${item.name} - R$ ${item.price.toFixed(2)}\n`;
-            });
-            
-            const total = cart.map(i => i.price).reduce((a,b) => a+b, 0);
-            mensagem += `\n*Valor Total:* R$ ${total.toFixed(2)}\n\nQuero receber a chave Pix de pagamento!`;
-            
-            // Link direto para o atendimento do Discord
-            window.open("https://discord.gg/De9Y3EVqR", "_blank");
-        }
-
-        // Animação em Background usando Canvas 2D (Fundo de Estrelas Estáticas)
+        // ----- SCRIPT DO CANVAS DO ESPAÇO INTERATIVO -----
         const canvas = document.getElementById('space-canvas');
         const ctx = canvas.getContext('2d');
+
+        let particles = [];
         let stars = [];
+        const mouse = { x: null, y: null };
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -639,6 +486,7 @@
             initStars();
         }
 
+        // Estrelas fixas de fundo piscantes
         function initStars() {
             stars = [];
             const count = Math.floor((canvas.width * canvas.height) / 8000);
@@ -647,24 +495,343 @@
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     size: Math.random() * 1.5,
-                    opacity: Math.random() * 0.7 + 0.1
+                    alpha: Math.random(),
+                    speed: 0.01 + Math.random() * 0.02
                 });
             }
-            drawStars();
         }
 
-        function drawStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(star => {
-                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+        // Classe de partículas do rastro do mouse
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.color = Math.random() > 0.5 ? 'rgba(0, 240, 255, ' : 'rgba(168, 85, 247, ';
+                this.alpha = 1;
+                this.decay = 0.015 + Math.random() * 0.02;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.fillStyle = this.color + this.alpha + ')';
                 ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
+            }
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+            
+            for(let i = 0; i < 2; i++) {
+                particles.push(new Particle(mouse.x, mouse.y));
+            }
+        });
+
+        function animateSpace() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+                ctx.fillRect(star.x, star.y, star.size, star.size);
             });
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].alpha <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animateSpace);
         }
 
         window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('DOMContentLoaded', resizeCanvas);
+        resizeCanvas();
+        animateSpace();
+
+
+        // ----- LÓGICA DE NAVEGAÇÃO E LOJA -----
+        function changePage(pageId) {
+            document.getElementById('page-landing').classList.remove('active-page');
+            document.getElementById('page-landing').classList.add('hidden-page');
+            document.getElementById('page-store').classList.remove('active-page');
+            document.getElementById('page-store').classList.add('hidden-page');
+            
+            const targetPage = document.getElementById(pageId);
+            targetPage.classList.remove('hidden-page');
+            targetPage.classList.add('active-page');
+            window.scrollTo(0, 0);
+        }
+
+        const productDetails = {
+            p1: {
+                name: "Conta Godhuman + Kitsune",
+                price: 49.90,
+                guaranteed: [
+                    "Level 2800 Garantido (Máximo)",
+                    "Estilo de Luta Godhuman (Deus Humano) liberado",
+                    "Fruta Kitsune Ativa (ou no Inventário)",
+                    "Espada Lendária Aleatória (Mestre de Espadas)",
+                    "Conta 100% Limpa (Sem e-mail/telefone vinculados)"
+                ],
+                chances: ["Chance de conter outras Frutas Míticas (Dough, Leopard)", "Chance de itens do Sea 3"]
+            },
+            p2: {
+                name: "Conta Soul Guitar + Dough V2",
+                price: 39.90,
+                guaranteed: [
+                    "Level 2800 Garantido (Máximo)",
+                    "Arma Mítica Soul Guitar Equipada",
+                    "Fruta Dough (Massa) Despertada com Skills V2",
+                    "Estilo de luta Sharkman Karate ou Superhuman",
+                    "Conta 100% Sem vínculos"
+                ],
+                chances: ["Chance de vir com Cursed Dual Katana (CDK)", "Chance de conter Raça V4 básica"]
+            },
+            p3: {
+                name: "Conta Inicial Level Max",
+                price: 19.90,
+                guaranteed: [
+                    "Level 2800 Garantido (Máximo)",
+                    "Resete de Status Disponível",
+                    "Acesso completo ao Sea 3 liberado",
+                    "Conta 100% Limpa pronta para customizar"
+                ],
+                chances: ["Chance de vir com fruta Lendária comida (Buddha, Magma)"]
+            },
+            v4_mink: {
+                name: "Conta Mink V4 Full Tier",
+                price: 59.90,
+                guaranteed: [
+                    "Level 2800 Máximo Garantido",
+                    "Raça Mink V4 Despertada (Todas as engrenagens completas)",
+                    "Velocidade de movimento passiva ultra rápida ativa",
+                    "Habilidade de criar tornados ao esquivar liberada",
+                    "Conta limpa e pronta para trocar os dados"
+                ],
+                chances: ["Chance de vir com Godhuman ou Soul Guitar de bônus", "Chance de conter Frutas no Inventário"]
+            },
+            v4_human: {
+                name: "Conta Human V4 Full Tier",
+                price: 59.90,
+                guaranteed: [
+                    "Level 2800 Máximo Garantido",
+                    "Raça Humana V4 Despertada (Engrenagens Máximas)",
+                    "Habilidade Psíquica de Medidor de Ira ativada no limite",
+                    "Multiplicador de dano bruto massivo por perda de vida",
+                    "Conta 100% segura sem e-mail fixado"
+                ],
+                chances: ["Chance de vir com maestria máxima em espadas raras"]
+            },
+            v4_angel: {
+                name: "Conta Angel V4 Full Tier",
+                price: 59.90,
+                guaranteed: [
+                    "Level 2800 Máximo Garantido",
+                    "Raça Angel V4 Despertada (Engrenagens Máximas)",
+                    "Habilidade de Planejar no ar e Voo livre ativados",
+                    "Aura Real Ativa: Causa lentidão e cancela ataques de quem chegar perto",
+                    "Conta limpa, sem vínculos anteriores"
+                ],
+                chances: ["Chance de vir com acessórios míticos do Sea 3"]
+            },
+            v4_shark: {
+                name: "Conta Shark V4 Full Tier",
+                price: 59.90,
+                guaranteed: [
+                    "Level 2800 Máximo Garantido",
+                    "Raça Shark V4 Despertada (Engrenagens Máximas)",
+                    "Escudo de Água Ativo que absorve até 30% de todo dano recebido",
+                    "Imunidade completa e absoluta ao dano de água do mar",
+                    "Conta limpa sem telefone vinculado"
+                ],
+                chances: ["Chance de vir com frutas despertadas como Magma ou Buddha"]
+            },
+            v4_cyborg: {
+                name: "Conta Cyborg V4 Full Tier",
+                price: 64.90,
+                guaranteed: [
+                    "Level 2800 Máximo Garantido",
+                    "Raça Cyborg V4 Despertada (Engrenagens Máximas)",
+                    "Habilidade de choque elétrico em cadeia passiva ao atacar",
+                    "Super detecção: Cancela e quebra o Instinto (Haki da Observação) do inimigo",
+                    "Conta 100% Segura para uso imediato"
+                ],
+                chances: ["Chance alta de conter milhões de Beli e fragmentos guardados"]
+            },
+            v4_ghoul: {
+                name: "Conta Ghoul V4 Full Tier",
+                price: 64.90,
+                guaranteed: [
+                    "Level 2800 Máximo Garantido",
+                    "Raça Ghoul V4 Despertada (Engrenagens Máximas)",
+                    "Roubo de vida (Life Leech) extremo ativado em estilos de luta",
+                    "Criação de névoa da escuridão que cega e reduz recarga de skills à noite",
+                    "Conta limpa e segura, pronta para vincular seus dados"
+                ],
+                chances: ["Chance de conter títulos e cores de Haki raros equipados"]
+            }
+        };
+
+        function openDetails(id) {
+            const product = productDetails[id];
+            const modal = document.getElementById('details-modal');
+            const container = document.getElementById('modal-container');
+            const content = document.getElementById('modal-content');
+
+            let guaranteedHtml = '';
+            product.guaranteed.forEach(item => {
+                guaranteedHtml += `<li class="flex items-start gap-2 text-sm text-gray-300"><i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i> ${item}</li>`;
+            });
+
+            let chancesHtml = '';
+            product.chances.forEach(item => {
+                chancesHtml += `<li class="flex items-start gap-2 text-sm text-gray-300"><i class="fa-solid fa-circle-question text-amber-400 mt-1"></i> ${item}</li>`;
+            });
+
+            content.innerHTML = `
+                <h2 class="text-2xl font-bold text-white pr-6">${product.name}</h2>
+                <div class="text-2xl font-bold text-[#00f0ff] mt-1">R$ ${product.price.toFixed(2)}</div>
+                
+                <div class="border-t border-gray-800 pt-4 mt-2">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-2">
+                        <i class="fa-solid fa-shield-check"></i> 100% Garantido na Conta:
+                    </h4>
+                    <ul class="space-y-2 bg-black/30 p-3 rounded-xl border border-emerald-950/20">
+                        ${guaranteedHtml}
+                    </ul>
+                </div>
+
+                <div class="border-t border-gray-800 pt-4">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-amber-400 mb-2">
+                        <i class="fa-solid fa-dice"></i> Chances de Conter (Bônus Aleatório):
+                    </h4>
+                    <ul class="space-y-2 bg-black/30 p-3 rounded-xl border border-amber-950/20">
+                        ${chancesHtml}
+                    </ul>
+                </div>
+
+                <div class="pt-4 flex gap-3">
+                    <button onclick="closeDetails()" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-xl text-sm transition-colors cursor-pointer">
+                        Voltar
+                    </button>
+                    <button onclick="addToCart('${product.name}', ${product.price}, '${id}'); closeDetails();" class="flex-1 bg-[#00f0ff] text-black font-bold py-3 rounded-xl text-sm hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg hover:shadow-[0_0_10px_#00f0ff]">
+                        <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                container.classList.remove('scale-95');
+                container.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeDetails() {
+            const container = document.getElementById('modal-container');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+            setTimeout(() => {
+                document.getElementById('details-modal').classList.add('hidden');
+            }, 200);
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('details-modal');
+            if (event.target == modal) {
+                closeDetails();
+            }
+        }
+
+        let cart = [];
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            const overlay = document.getElementById('cart-overlay');
+            sidebar.classList.toggle('translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function addToCart(name, price, productId) {
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id: productId, name, price, quantity: 1 });
+            }
+            updateCartUI();
+            toggleCart();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            
+            const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+            cartCount.innerText = totalItems;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center py-8">Seu carrinho está vazio.</p>';
+                cartTotal.innerText = 'R$ 0,00';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                cartItemsContainer.innerHTML += `
+                    <div class="flex justify-between items-center bg-gray-900 p-3 rounded-lg border border-gray-800">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">${item.name}</h4>
+                            <p class="text-xs text-[#00f0ff]">R$ ${item.price.toFixed(2)} x${item.quantity}</p>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-400 p-1 cursor-pointer">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            cartTotal.innerText = `R$ ${total.toFixed(2)}`;
+        }
+
+        function processCheckout() {
+            if (cart.length === 0) {
+                alert('Adicione itens no carrinho primeiro!');
+                return;
+            }
+
+            const emailInput = document.getElementById('checkout-email').value;
+            
+            if (!emailInput || !emailInput.includes('@')) {
+                alert('Por favor, digite um E-mail válido para receber a sua conta.');
+                document.getElementById('checkout-email').focus();
+                return;
+            }
+
+            alert(`Tudo certo! Redirecionando para o pagamento seguro...\nSua conta será entregue no e-mail: ${emailInput}`);
+            window.open('https://discord.gg/De9Y3EVqR', '_blank');
+        }
     </script>
 </body>
 </html>
